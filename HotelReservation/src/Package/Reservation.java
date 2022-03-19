@@ -2,14 +2,16 @@ package Package;
 
 import java.util.Scanner;
 
+
 public class Reservation {
+
 	
 	public enum RoomType{
 		  SINGLEROOM,DOUBLEROOM,DELUXE, VIPSUITE;
 		 }
-
 	
 	private RoomType roomtype;
+	private int ReservationCode;
     private Room room;
     private Guest guest;
     private String checkInDate;
@@ -17,7 +19,10 @@ public class Reservation {
     private int adults;
     private int children;
     private String code;
+   
+   
     Reservation(Guest guest){
+
         this.guest = guest;
         Scanner sc = new Scanner(System.in);
         System.out.println("Input check in date");
@@ -31,7 +36,7 @@ public class Reservation {
         //BUFFER
         sc.nextLine();
         System.out.println("Input Room Type:");
-        String roomInput = sc.nextLine();
+        String roomInput = sc.nextLine().toUpperCase();
         switch (roomInput) {
         case "SINGLE ROOM":
         	this.roomtype = RoomType.SINGLEROOM;
@@ -52,6 +57,10 @@ public class Reservation {
         
         // input for room, check for validity
 
+    }
+    
+    public int getReservationCode() {
+    	return ReservationCode;
     }
    
     
