@@ -1,5 +1,7 @@
 package Assignment
 
+import java.util.ArrayList;
+
 public class Rooms {
     private Room[] rooms;
     int numRooms = 48;
@@ -32,4 +34,64 @@ public class Rooms {
             System.out.println();
         }
     }
+
+    public Room getRoom(int roomNum){
+        return rooms[roomNum - 1];
+    }
+
+    private void printVacantRoomsByType(Room.RoomType rt){
+        ArrayList<Integer> roomNums = new ArrayList<Integer>();
+        double totalVacant = 0;
+        double total = 0;
+        for (int i = 0; i < 48; i++){
+            if (rooms[i].getRoomType() == rt){
+                total += 1;
+                if (rooms[i].getStatus() == Room.RoomStatus.valueOf("VACANT")){
+                    roomNums.add(i + 1);
+                    totalVacant += 1;
+                }
+            }
+        }
+        double vacancyRate = totalVacant/total;
+        System.out.printf("| %s Room | ", rt.toString());
+        for (int i = 0; i < roomNums.size(); i++){
+            System.out.printf("%d ", roomNums.get(i));
+        }
+        System.out.printf("| Vacancy Rate | %.2f |\n", vacancyRate);
+    }
+
+    public void printVacantRooms(){
+        printVacantRoomsByType(Room.RoomType.valueOf("SINGLE"));
+        printVacantRoomsByType(Room.RoomType.valueOf("DOUBLE"));
+        printVacantRoomsByType(Room.RoomType.valueOf("DELUXE"));
+        printVacantRoomsByType(Room.RoomType.valueOf("VIPSUITE"));
+    }
+
+    private void printRoomsByStatusSub(Room.RoomStatus rs){
+        ArrayList<Integer> roomNums = new ArrayList<Integer>();
+        for (int i = 0; i < 48; i++){
+            if (rooms[i].getStatus() == rs){
+                roomNums.add(i + 1);
+            }
+        }
+        System.out.printf("| %s |", rs.toString());
+        if (roomNums.size() == 0){
+            System.out.println();
+            return;
+        }
+        for (int i = 0; i < roomNums.size(); i++){
+            System.out.printf("%d ", roomNums.get(i));
+        }
+        System.out.println("|");
+    }
+
+    public void printRoomsByStatusMain(){
+        printRoomsByStatusSub(Room.RoomStatus.valueOf("VACANT"));
+        printRoomsByStatusSub(Room.RoomStatus.valueOf("RESERVED"));
+        printRoomsByStatusSub(Room.RoomStatus.valueOf("OCCUPIED"));
+        printRoomsByStatusSub(Room.RoomStatus.valueOf("MAINTENANCE"));
+
+    }
+
 }
+
