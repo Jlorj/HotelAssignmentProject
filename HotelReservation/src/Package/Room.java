@@ -59,4 +59,13 @@ public abstract class Room {
         return view;
     }
 
+    public void setStatus(RoomStatus rs){
+        status = rs;
+    }
+
+    public RoomStatus getStatus(){
+        return status;
+    }
+
 }
+
