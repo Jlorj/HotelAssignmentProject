@@ -1,4 +1,4 @@
-package Package;
+package Assignment;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -44,6 +44,7 @@ public class App {
         
             
             int choice = sc.nextInt();
+            
             switch (choice) {
             
                 case 1:
@@ -170,14 +171,16 @@ public class App {
                 		
                 		//Printing updated details of guest
                 		System.out.println("Updated Guest Details: ");
-                		System.out.println("Guest Name :           " + guest.getIc().getName());
-                		System.out.println("Guest Country:         " + guest.getIc().getCountry());
-                		System.out.println("Guest Gender:          " + guest.getIc().getGender());
-                		System.out.println("Guest Nationality:     " + guest.getIc().getNationality());
-                		System.out.println("Guest Address:         "+ guest.getIc().getAddress());
-                		System.out.println("Guest) Contact:        " + guest.getIc().getContact());
                 		
-                	
+                		String format = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
+                		System.out.printf(format, "Guest name:", "Guest country", "Guest gender", "Guest nationality", "Guest address", "Address contact" );
+                		System.out.printf(format, "================", "==================", "==================", "==================", "==================",  "==================");
+                		
+                		
+                		System.out.printf(format, guest.getIc().getName(), guest.getIc().getCountry(), guest.getIc().getGender(), guest.getIc().getNationality(), guest.getIc().getAddress(),guest.getIc().getContact()); 
+              	
+                		
+                			
                 	
                 		System.out.println("Select which do you wish you change: ");
                 		System.out.println("(1) Name ");
