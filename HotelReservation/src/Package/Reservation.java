@@ -90,9 +90,6 @@ public class Reservation {
         return children;
     }
     
-    public String getCode(){
-        return code;
-    }
     
     private void generateCode(){
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
