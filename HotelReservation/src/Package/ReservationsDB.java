@@ -8,14 +8,11 @@ public class ReservationsDB {
 	//0			Reservation Code
 	//1			Guest 
 	//2			Reservation
-	ReservationsDB(){
-		
-	}
+	ReservationsDB(){}
 	
-	public void appendRow(int reservationCode, Guest guest, Reservation reservation) {
+	public void appendRow(String reservationCode, Reservation reservation) {
 		ArrayList<Object> newRow = new ArrayList<Object>();
 		newRow.add(reservationCode);
-		newRow.add(guest);
 		newRow.add(reservation);
 		
 		ReservationDataBase.add(newRow);
@@ -30,19 +27,11 @@ public class ReservationsDB {
 		ReservationDataBase = reservationDataBase;
 	};
 	
-	public Guest getGuestFromReservationCode(int ReservationCode){
-		for(int i = 0; i<ReservationDataBase.size(); i++) {
-			if((int)((ArrayList<Object>)ReservationDataBase.get(i)).get(0) == ReservationCode) {
-				return (Guest)((ArrayList<Object>) ReservationDataBase.get(i)).get(1);
-			}
-		}
-		return null;	
-	}
 	
 	public Reservation getReservationFromReservationCode(int ReservationCode){
 		for(int i = 0; i<ReservationDataBase.size(); i++) {
-			if((int)((ArrayList<Object>)ReservationDataBase.get(i)).get(0) == ReservationCode) {
-				return (Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(2);
+			if(((String)((ArrayList<Object>)ReservationDataBase.get(i)).get(0)).equals(ReservationCode)) {
+				return (Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1);
 			}
 		}
 		return null;
