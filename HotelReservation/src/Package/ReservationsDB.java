@@ -1,4 +1,4 @@
-package Package;
+package Assignment;
 
 import java.util.ArrayList;
 
@@ -68,21 +68,17 @@ public class ReservationsDB {
 		
 		ArrayList<Object> retrievDB = this.ReservationDataBase;
 		
+		String format = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
+		System.out.printf(format, "Guest name:", "Guest country", "Guest gender", "Guest nationality", "Guest address", "Address contact" );
+		System.out.printf(format, "================", "==================", "==================", "==================", "==================",  "==================");
+		
 		for(int i=0;i<retrievDB.size();i++) {
 			
 			ArrayList<Object> row = (ArrayList<Object>) retrievDB.get(i);
 			
-			System.out.println("Guest name:  " + ((Reservation)row.get(1)).getGuest().getIc().getName());
-//			
-			System.out.println("Guest country:  " + ((Reservation)row.get(1)).getGuest().getIc().getCountry());
+			System.out.printf(format, ( ((Reservation)row.get(1)).getGuest().getIc().getName()), ((Reservation)row.get(1)).getGuest().getIc().getCountry(),  ((Reservation)row.get(1)).getGuest().getIc().getGender(), ((Reservation)row.get(1)).getGuest().getIc().getNationality(),   ((Reservation)row.get(1)).getGuest().getIc().getAddress(), ((Reservation)row.get(1)).getGuest().getIc().getContact()  );
 			
-			System.out.println("Guest gender:  " + ((Reservation)row.get(1)).getGuest().getIc().getGender());
 			
-			System.out.println("Guest nationality:  " + ((Reservation)row.get(1)).getGuest().getIc().getNationality());
-			
-			System.out.println("Guest address:  " + ((Reservation)row.get(1)).getGuest().getIc().getAddress());
-			
-			System.out.println("Guest contact:  " + ((Reservation)row.get(1)).getGuest().getIc().getContact());
 			
 		}
 	}
