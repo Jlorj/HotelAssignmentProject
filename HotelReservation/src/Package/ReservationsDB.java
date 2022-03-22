@@ -59,6 +59,37 @@ public class ReservationsDB {
 		}
 	}
 	
+
+	
+		
+	
+}
+		return null;
+	}
+	
+	public void DisplayGuest() {
+		
+		ArrayList<Object> retrievDB = this.ReservationDataBase;
+		
+		for(int i=0;i<retrievDB.size();i++) {
+			
+			ArrayList<Object> row = (ArrayList<Object>) retrievDB.get(i);
+			
+			System.out.println("Guest name:  " + ((Reservation)row.get(1)).getGuest().getIc().getName());
+//			
+			System.out.println("Guest country:  " + ((Reservation)row.get(1)).getGuest().getIc().getCountry());
+			
+			System.out.println("Guest gender:  " + ((Reservation)row.get(1)).getGuest().getIc().getGender());
+			
+			System.out.println("Guest nationality:  " + ((Reservation)row.get(1)).getGuest().getIc().getNationality());
+			
+			System.out.println("Guest address:  " + ((Reservation)row.get(1)).getGuest().getIc().getAddress());
+			
+			System.out.println("Guest contact:  " + ((Reservation)row.get(1)).getGuest().getIc().getContact());
+			
+		}
+	}
+	
 	public Reservation getReservation(String reservecode) {
 		
 		for(int i = 0; i < this.ReservationDataBase.size(); i++) {
