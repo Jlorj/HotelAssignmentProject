@@ -1,6 +1,6 @@
 package Package;
 
-import java.util.Scanner
+import java.util.Scanner;
 
 public class Reservation {
 
@@ -10,7 +10,6 @@ public class Reservation {
     }
 
     private RoomType roomtype;
-    private int ReservationCode;
     private Room room;
     private Guest guest;
     private String checkInDate;
@@ -63,8 +62,8 @@ public class Reservation {
         return roomtype;
     }
     
-    public int getReservationCode() {
-        return ReservationCode;
+    public String getReservationCode() {
+        return code;
     }
     
     public Room getRoom(){

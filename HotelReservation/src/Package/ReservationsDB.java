@@ -6,8 +6,7 @@ public class ReservationsDB {
 	private ArrayList<Object> ReservationDataBase = new ArrayList<Object>();
 	//Index		Variable
 	//0			Reservation Code
-	//1			Guest 
-	//2			Reservation
+	//1			Reservation
 	ReservationsDB(){}
 	
 	public void appendRow(String reservationCode, Reservation reservation) {
@@ -28,7 +27,7 @@ public class ReservationsDB {
 	};
 	
 	
-	public Reservation getReservationFromReservationCode(int ReservationCode){
+	public Reservation getReservationFromReservationCode(String ReservationCode){
 		for(int i = 0; i<ReservationDataBase.size(); i++) {
 			if(((String)((ArrayList<Object>)ReservationDataBase.get(i)).get(0)).equals(ReservationCode)) {
 				return (Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1);
@@ -36,4 +35,11 @@ public class ReservationsDB {
 		}
 		return null;
 	}
+	
+	
+	
+	
+	
+	
+	
 }
