@@ -10,7 +10,6 @@ public class DoubleRoom extends Room{
         this.roomtype = RoomType.DOUBLE;
         this.weekendRate = 100.0;
         this.weekdayRate = 50.0;
-        this.status = RoomStatus.OCCUPIED;
 
 
     }
