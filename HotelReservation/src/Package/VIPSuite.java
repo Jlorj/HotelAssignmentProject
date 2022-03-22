@@ -9,8 +9,6 @@ public class VIPSuite extends Room{
         this.roomtype = RoomType.VIPSUITE;
         this.weekendRate = 100.0;
         this.weekdayRate = 50.0;
-        this.status = RoomStatus.OCCUPIED;
-
 
     }
 
