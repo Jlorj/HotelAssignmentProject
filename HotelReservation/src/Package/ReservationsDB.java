@@ -59,6 +59,22 @@ public class ReservationsDB {
 		}
 	}
 	
+	public Guest getGuest(String reservecode) {
+		
+		for(int i = 0; i < this.ReservationDataBase.size(); i++) {
+			
+			ArrayList<Object> row = (ArrayList<Object>) this.ReservationDataBase.get(i);
+			
+			if(row.get(0).equals(reservecode))
+				return (Guest) row.get(1);
+			
+			
+		}
+		
+		return null;
+				
+	}
+	
 		
 	
 }
