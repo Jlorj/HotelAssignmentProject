@@ -61,43 +61,43 @@ public class Reservation {
     public RoomType getRoomtype(){
         return roomtype;
     }
-    
+
     public String getReservationCode() {
         return code;
     }
-    
+
     public Room getRoom(){
         return room;
     }
-    
+
     public Guest getGuest(){
         return guest;
     }
-    
+
     public String getCheckInDate(){
         return checkInDate;
     }
-    
+
     public String getCheckOutDate(){
         return checkOutDate;
     }
-    
+
     public int getAdults(){
         return adults;
     }
-    
+
     public int getChildren(){
         return children;
     }
-    
+
     public String getCode(){
         return code;
     }
-    
+
     private void generateCode(){
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                                    "0123456789" +
-                                    "abcdefghijklmnopqrs";
+                "0123456789" +
+                "abcdefghijklmnopqrs";
         StringBuilder sb = new StringBuilder(12);
 
         for (int i = 0; i < 6; i++){
@@ -107,40 +107,40 @@ public class Reservation {
         this.code = sb.toString();
     }
 
-	public void setRoomtype(RoomType roomtype) {
-		this.roomtype = roomtype;
-	}
+    public void setRoomtype(RoomType roomtype) {
+        this.roomtype = roomtype;
+    }
 
-	public void setRoom(Room room) {
-		this.room = room;
-	}
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
-	public void setGuest(Guest guest) {
-		this.guest = guest;
-	}
+    public void setGuest(Guest guest) {
+        this.guest = guest;
+    }
 
-	public void setCheckInDate(String checkInDate) {
-		this.checkInDate = checkInDate;
-	}
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = checkInDate;
+    }
 
-	public void setCheckOutDate(String checkOutDate) {
-		this.checkOutDate = checkOutDate;
-	}
+    public void setCheckOutDate(String checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
 
-	public void setAdults(int adults) {
-		this.adults = adults;
-	}
+    public void setAdults(int adults) {
+        this.adults = adults;
+    }
 
-	public void setChildren(int children) {
-		this.children = children;
-	}
+    public void setChildren(int children) {
+        this.children = children;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-    
-    
-    
-    
-    
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+
+
+
+
 }
