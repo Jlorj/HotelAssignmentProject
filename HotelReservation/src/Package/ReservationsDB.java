@@ -1,4 +1,4 @@
-package Assignment;
+package Package;
 
 import java.util.ArrayList;
 
@@ -35,6 +35,34 @@ public class ReservationsDB {
 		}
 		return null;
 	}
+
+	public int getReservationIndexFromReservationCode(String ReservationCode){
+		for(int i = 0; i<ReservationDataBase.size(); i++) {
+			if(((String)((ArrayList<Object>)ReservationDataBase.get(i)).get(0)).equals(ReservationCode)) {
+				return i;
+			}
+		}
+		return 0;
+	}
+
+	
+	
+	public void checkOut(String reservationCode) {
+		ReservationDataBase.remove(getReservationIndexFromReservationCode(reservationCode));
+		System.out.println("Successfully Checked Out! Reservation has been deleted");
+	}
+	
+	
+	public void displayAllReservations(){
+		String format = "%-20s%s%n";
+		System.out.printf(format, "Reservation Code", "Reservation Object", "Hi");
+		System.out.printf(format, "================", "==================");
+
+		for(int i = 0; i<ReservationDataBase.size(); i++) {
+			System.out.printf(format, ((ArrayList<Object>)ReservationDataBase.get(i)).get(0), ((ArrayList<Object>)ReservationDataBase.get(i)).get(1));
+		}
+	}
+	
 	
 	public void DisplayGuest() {
 		
@@ -59,5 +87,4 @@ public class ReservationsDB {
 		}
 	}
 	
-
 }

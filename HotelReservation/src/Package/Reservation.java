@@ -90,6 +90,9 @@ public class Reservation {
         return children;
     }
     
+    public String getCode(){
+        return code;
+    }
     
     private void generateCode(){
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
@@ -103,5 +106,41 @@ public class Reservation {
         }
         this.code = sb.toString();
     }
+
+	public void setRoomtype(RoomType roomtype) {
+		this.roomtype = roomtype;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	public void setGuest(Guest guest) {
+		this.guest = guest;
+	}
+
+	public void setCheckInDate(String checkInDate) {
+		this.checkInDate = checkInDate;
+	}
+
+	public void setCheckOutDate(String checkOutDate) {
+		this.checkOutDate = checkOutDate;
+	}
+
+	public void setAdults(int adults) {
+		this.adults = adults;
+	}
+
+	public void setChildren(int children) {
+		this.children = children;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+    
+    
+    
+    
     
 }
