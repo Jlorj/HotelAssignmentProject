@@ -10,7 +10,6 @@ public class SingleRoom extends Room{
         this.roomtype = RoomType.SINGLE;
         this.weekendRate = 100.0;
         this.weekdayRate = 50.0;
-        this.status = RoomStatus.OCCUPIED;
 
     }
 }
