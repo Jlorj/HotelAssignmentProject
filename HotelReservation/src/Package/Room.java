@@ -1,4 +1,4 @@
-package Package;
+package Assignment;
 
 public abstract class Room {
 
@@ -16,7 +16,7 @@ public abstract class Room {
 
     protected BedType bedtype;
     protected RoomType roomtype;
-    protected RoomStatus status;
+    protected RoomStatus status = RoomStatus.VACANT;
     protected double weekendRate;
     protected double weekdayRate;
     private int roomNum;
@@ -31,8 +31,6 @@ public abstract class Room {
         this.wifi = wifi;
         this.smoking = smoking;
         this.view = view;
-        this.status = RoomStatus.VACANT;
-
     }
 
     public RoomStatus checkAvail() {
