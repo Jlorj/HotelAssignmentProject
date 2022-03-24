@@ -1,6 +1,6 @@
 package Assignment
-
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class Rooms {
     private Room[] rooms;
@@ -39,15 +39,15 @@ public class Rooms {
         return rooms[roomNum - 1];
     }
 
-    private void printVacantRoomsByType(Room.RoomType rt){
-        ArrayList<Integer> roomNums = new ArrayList<Integer>();
+    public ArrayList<String> printVacantRoomsByType(Room.RoomType rt){
+        ArrayList<String> roomNums = new ArrayList<String>();
         double totalVacant = 0;
         double total = 0;
         for (int i = 0; i < 48; i++){
             if (rooms[i].getRoomType() == rt){
                 total += 1;
                 if (rooms[i].getStatus() == Room.RoomStatus.valueOf("VACANT")){
-                    roomNums.add(i + 1);
+                    roomNums.add(formatRoomNum(i));
                     totalVacant += 1;
                 }
             }
@@ -55,9 +55,24 @@ public class Rooms {
         double vacancyRate = totalVacant/total;
         System.out.printf("| %s Room | ", rt.toString());
         for (int i = 0; i < roomNums.size(); i++){
-            System.out.printf("%d ", roomNums.get(i));
+            System.out.printf("%s ", roomNums.get(i));
         }
         System.out.printf("| Vacancy Rate | %.2f |\n", vacancyRate);
+        return roomNums;
+    }
+
+    public ArrayList<String> printVacantRoomWithInfo(Room.RoomType rt){
+        ArrayList<String> toReturn = printVacantRoomsByType(rt);
+        System.out.println();
+        String format = "%-20s%-20s%-20s%-20s%n";
+        System.out.printf(format, "Room Number", "WIFI", "Smoking", "View");
+        System.out.printf(format, "================", "==================", "==================", "==================");
+        Room room;
+        for (int i = 0; i < toReturn.size(); i++){
+            room = rooms[deformatRoomNum(toReturn.get(i)) - 1];
+            System.out.printf(format, toReturn.get(i), room.getWifi(),  room.getSmoking(),  room.getView());
+        }
+        return toReturn;
     }
 
     public void printVacantRooms(){
@@ -68,10 +83,10 @@ public class Rooms {
     }
 
     private void printRoomsByStatusSub(Room.RoomStatus rs){
-        ArrayList<Integer> roomNums = new ArrayList<Integer>();
+        ArrayList<String> roomNums = new ArrayList<String>();
         for (int i = 0; i < 48; i++){
             if (rooms[i].getStatus() == rs){
-                roomNums.add(i + 1);
+                roomNums.add(formatRoomNum(i));
             }
         }
         System.out.printf("| %s |", rs.toString());
@@ -80,7 +95,7 @@ public class Rooms {
             return;
         }
         for (int i = 0; i < roomNums.size(); i++){
-            System.out.printf("%d ", roomNums.get(i));
+            System.out.printf("%s ", roomNums.get(i));
         }
         System.out.println("|");
     }
@@ -90,7 +105,14 @@ public class Rooms {
         printRoomsByStatusSub(Room.RoomStatus.valueOf("RESERVED"));
         printRoomsByStatusSub(Room.RoomStatus.valueOf("OCCUPIED"));
         printRoomsByStatusSub(Room.RoomStatus.valueOf("MAINTENANCE"));
+    }
 
+    public String formatRoomNum(int roomNum){
+        return "0" + Integer.toString(roomNum/8 + 1) + "0" + Integer.toString(roomNum%8 + 1);
+    }
+
+    public int deformatRoomNum(String roomNum){
+        return ((Character.getNumericValue(roomNum.charAt(1)) - 1) * 8) + (Character.getNumericValue(roomNum.charAt(3)));
     }
 
 }
