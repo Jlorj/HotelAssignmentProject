@@ -13,6 +13,7 @@ public class Reservation {
     private int adults;
     private int children;
     private String code;
+    private double payment;
 
 
     Reservation(Guest guest){
