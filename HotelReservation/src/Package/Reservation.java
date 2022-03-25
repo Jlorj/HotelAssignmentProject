@@ -1,4 +1,4 @@
-package Assignment
+package Assignment;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -108,54 +108,16 @@ public class Reservation {
 
     public double getPayment() {
         // counting the number of weekdays and weekends and add the rates accordingly
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd mm yyyy");
         LocalDate parsedCheckInDate = LocalDate.parse(this.checkInDate);
         LocalDate parsedCheckOutDate = LocalDate.parse(this.checkOutDate);
-        if (room.getRoomType().equals(Room.RoomType.SINGLE)){
-            for (LocalDate date = parsedCheckInDate; date.isBefore(parsedCheckOutDate); date = date.plusDays(1)){
-                if (date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
-                        date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                    this.payment += room.weekdayRate;
-                }
-                else if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                    this.payment += room.weekendRate;
-                }
+        
+        for (LocalDate date = parsedCheckInDate; date.isBefore(parsedCheckOutDate); date = date.plusDays(1)){
+            if (date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
+                    date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.FRIDAY) {
+                this.payment += room.weekdayRate;
             }
-        }
-
-        else if (room.getRoomType().equals(Room.RoomType.DOUBLE)){
-            for (LocalDate date = parsedCheckInDate; date.isBefore(parsedCheckOutDate); date = date.plusDays(1)){
-                if (date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
-                        date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                    this.payment += room.weekdayRate;
-                }
-                else if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                    this.payment += room.weekendRate;
-                }
-            }
-        }
-
-        else if (room.getRoomType().equals(Room.RoomType.DELUXE)){
-            for (LocalDate date = parsedCheckInDate; date.isBefore(parsedCheckOutDate); date = date.plusDays(1)){
-                if (date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
-                        date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                    this.payment += room.weekdayRate;
-                }
-                else if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                    this.payment += room.weekendRate;
-                }
-            }
-        }
-
-        else if (room.getRoomType().equals(Room.RoomType.VIPSUITE)){
-            for (LocalDate date = parsedCheckInDate; date.isBefore(parsedCheckOutDate); date = date.plusDays(1)){
-                if (date.getDayOfWeek() == DayOfWeek.MONDAY || date.getDayOfWeek() == DayOfWeek.TUESDAY || date.getDayOfWeek() == DayOfWeek.WEDNESDAY ||
-                        date.getDayOfWeek() == DayOfWeek.THURSDAY || date.getDayOfWeek() == DayOfWeek.FRIDAY) {
-                    this.payment += room.weekdayRate;
-                }
-                else if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                    this.payment += room.weekendRate;
-                }
+            else if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                this.payment += room.weekendRate;
             }
         }
         return this.payment;
