@@ -1,4 +1,4 @@
-package Assignment
+package Assignment;
 
 public class VIPSuite extends Room{
 
@@ -7,9 +7,7 @@ public class VIPSuite extends Room{
         super(roomNum,wifi,smoking,view);
         this.bedtype = BedType.MASTER;
         this.roomtype = RoomType.VIPSUITE;
-        this.weekendRate = 100.0;
-        this.weekdayRate = 50.0;
-
+        this.weekendRate = 250.0;
+        this.weekdayRate = 200.0;
     }
-
 }
