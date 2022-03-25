@@ -342,7 +342,7 @@ public class App {
                             if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
                                 System.out.println("No reservation under this code has been made!");
                             } else {
-                            	System.out.println(DataBase.getReservationFromReservationCode(reservationCode).getPayment());
+                            	System.out.println("The total payment of your room stay is: " + DataBase.getReservationFromReservationCode(reservationCode).getPayment());
                                 DataBase.checkOut(reservationCode);
                             }
                             
