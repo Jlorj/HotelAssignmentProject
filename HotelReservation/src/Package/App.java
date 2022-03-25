@@ -6,6 +6,7 @@ import org.w3c.dom.ls.LSOutput;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
@@ -217,7 +218,7 @@ public class App {
                     System.out.println("Please select an option for Reservations");
                     System.out.println("----------------------------------------------");
                     System.out.println("(1) Check-In (Create New Reservation)");
-                    System.out.println("(2) Check-Out (Delete Reservation)");
+                    System.out.println("(2) Check-Out (Delete Reservation)"); // printing out the bill invoice as well
                     System.out.println("(3) Update an Existing Reservation");
                     System.out.println("(4) Display a Reservation by Reservation Code");
                     System.out.println("(5) Display Reservations Database");
@@ -328,16 +329,33 @@ public class App {
                             }
                             break;
 
-                        case 2:
+                        case 2: // printing guest's hotel bill invoice
                             System.out.println("Please enter reservation code: ");
                             reservationCode = sc.nextLine();
                             if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
                                 System.out.println("No reservation under this code has been made!");
                             } else {
-                                System.out.println("The total payment of your room stay is: " + DataBase.getReservationFromReservationCode(reservationCode).getPayment());
+                            	String format = "%-20s%-20s%-20s%n";
+                            	DecimalFormat df = new DecimalFormat("0.00");
+                            	double totalPayment = DataBase.getReservationFromReservationCode(reservationCode).getPayment();
+                                System.out.println("#" + reservationCode + " INVOICE");
+                                System.out.println("Description");
+                                System.out.println("========================================================");
+                                System.out.println("Your Room Service Orders");
+                                System.out.println("========================================================");
+                                System.out.printf(format, "Date Ordered", "Time Ordered", "Amount", "Remarks");
+                                System.out.printf(format, "================", "================", "================", "================");
+                                if (rsDB.rsDB.get(reservationCode) != null) {
+                                	for (int i=0;i<rsDB.rsDB.get(reservationCode).size();i++) {
+                                    	rsDB.rsDB.get(reservationCode).get(i).printBill();
+                                    	totalPayment += rsDB.rsDB.get(reservationCode).get(i).getPayment();
+                                    }
+                                }
+                                System.out.println("================================================================");
+                                DataBase.getReservationFromReservationCode(reservationCode).printBill();
+                                System.out.println("Your Total Bill is: " + df.format(totalPayment)); // maybe include a statement below to indicate paid by credit card or cash?
                                 DataBase.checkOut(reservationCode);
                             }
-
                             break;
 
                         case 3:
@@ -511,8 +529,6 @@ public class App {
                             break;
 
                         case 4:
-
-                            String time;
                             String remarks;
                             int continueOrder;
                             boolean successfulOrder;
@@ -526,20 +542,25 @@ public class App {
                                 break;
                             }
 
-                            // Below code has to change to get current time instead of manual input
-                            LocalDateTime now = LocalDateTime.now();
-                            RoomService newRoomService = new RoomService(now.toString(), menu);
+
+                            
                             while(true){
+                            	menu.printMenuItems();
                                 System.out.println("(1) Order Food");
                                 System.out.println("(2) Exit");
                                 continueOrder = sc.nextInt();
                                 sc.nextLine();
                                 if (continueOrder == 1){
+                                	RoomService newRoomService = new RoomService(menu);
                                     System.out.println("Name Of The Food");
                                     foodName = sc.nextLine();
                                     successfulOrder = newRoomService.order(foodName);
                                     if (successfulOrder){
                                         System.out.println("You have ordered " + foodName);
+                                        System.out.println("Any remarks?");
+                                        remarks = sc.nextLine();
+                                        newRoomService.setRemarks(remarks);
+                                        rsDB.append(code, newRoomService);
                                     }
                                     else{
                                         System.out.println("Food Item Not Available");
@@ -549,11 +570,7 @@ public class App {
                                     break;
                                 }
                             }
-                            System.out.println("Any remarks?");
-                            remarks = sc.nextLine();
-                            newRoomService.setRemarks(remarks);
-
-                            rsDB.append(code, newRoomService);
+                            
                             break;
 
                         case 5:
