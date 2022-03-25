@@ -342,8 +342,10 @@ public class App {
                             if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
                                 System.out.println("No reservation under this code has been made!");
                             } else {
+                            	System.out.println(DataBase.getReservationFromReservationCode(reservationCode).getPayment());
                                 DataBase.checkOut(reservationCode);
                             }
+                            
                             break;
 
                         case 3:
@@ -499,7 +501,6 @@ public class App {
                             break;
 
                         case 2:
-
                             System.out.println("Enter Name Of New Food");
                             name = sc.nextLine();
                             System.out.println("Enter Preparation Method Of New Food");
@@ -599,11 +600,5 @@ public class App {
 
             }
         }
-
-
-
-
-
     }
-
 }
