@@ -1,11 +1,12 @@
 package Assignment;
 
+import java.text.DecimalFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Reservation {
+public class Reservation implements Payment{
     private Room room;
     private Guest guest;
     private String checkInDate;
@@ -121,6 +122,11 @@ public class Reservation {
             }
         }
         return this.payment;
+    }
+    
+    public void printBill() {
+    	DecimalFormat df = new DecimalFormat("0.00");
+    	System.out.println("The subtotal bill for your hotel stay is: SGD" + df.format(this.payment));
     }
 
 }
