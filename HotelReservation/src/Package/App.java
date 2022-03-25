@@ -1,5 +1,6 @@
 package Assignment;
 
+
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.BufferedReader;
@@ -71,7 +72,7 @@ public class App {
             // e. Create/Update/Remove room service menu items.
             // RoomService Menu will be under here
             System.out.println("(4) Room Service Orders");
-            
+
             System.out.println("(5) Shut Down");
             System.out.println("------------------------");
 
@@ -264,6 +265,25 @@ public class App {
                                 }
                                 break;
                             }
+                            int adults = myReservation.getAdults();
+                            int children = myReservation.getChildren();
+                            if ((adults > 1 || children > 1) && roomType.equals("SINGLE")){
+                                System.out.println("SINGLE Room Only Accommodate At Most 1 Adult And 1 Child");
+                                break;
+                            }
+                            else if ((adults > 2 || children > 2) && roomType.equals("DOUBLE")){
+                                System.out.println("DOUBLE Room Only Accommodate At Most 2 Adults And 2 Children");
+                                break;
+                            }
+                            else if ((adults > 4 || children > 5) && roomType.equals("DELUXE")){
+                                System.out.println("DELUXE Room Only Accommodate At Most 4 Adults And 5 Children");
+                                break;
+                            }
+                            else if ((adults > 6 || children > 7)){
+                                System.out.println("VIPSUITE Only Accommodate At Most 6 Adults and 7 Children");
+                                break;
+                            }
+
                             ArrayList<String> vacancy = rooms.printVacantRoomWithInfo(Room.RoomType.valueOf(roomType));
                             if (vacancy.size() == 0){
                                 System.out.printf("There Are No More %s Rooms Available ", roomType);
@@ -314,10 +334,10 @@ public class App {
                             if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
                                 System.out.println("No reservation under this code has been made!");
                             } else {
-                            	System.out.println("The total payment of your room stay is: " + DataBase.getReservationFromReservationCode(reservationCode).getPayment());
+                                System.out.println("The total payment of your room stay is: " + DataBase.getReservationFromReservationCode(reservationCode).getPayment());
                                 DataBase.checkOut(reservationCode);
                             }
-                            
+
                             break;
 
                         case 3:
@@ -386,7 +406,7 @@ public class App {
                     }
 
                     break;
-                    
+
                 case 3:
                     int userInput;
                     int roomNumber;
@@ -508,7 +528,7 @@ public class App {
 
                             // Below code has to change to get current time instead of manual input
                             LocalDateTime now = LocalDateTime.now();
-                            RoomService newRoomService = new RoomService(now, menu);
+                            RoomService newRoomService = new RoomService(now.toString(), menu);
                             while(true){
                                 System.out.println("(1) Order Food");
                                 System.out.println("(2) Exit");
@@ -556,10 +576,10 @@ public class App {
                 default:
                     System.out.printf("Input of %d Is Not Valid\n", choice);
                     break;
-                   
-            case 5:
-            	on = false; // Shutting down Hotel Reservation System
-            	break;
+
+                case 5:
+                    on = false; // Shutting down Hotel Reservation System
+                    break;
             }
         }
     }
