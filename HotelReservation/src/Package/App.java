@@ -1,6 +1,5 @@
 package Assignment;
 
-
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.BufferedReader;
@@ -9,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
+import java.time.LocalDateTime;
 
 public class App {
     public static void main(String[] args) {
@@ -49,14 +49,14 @@ public class App {
         menu.addFood(coke);
         // end
 
-
         ReservationsDB DataBase = new ReservationsDB(); // creating a new DataBase of Reservations
         RoomServiceDB rsDB = new RoomServiceDB(); // creating a new Database for room service
         Scanner sc = new Scanner(System.in);
+        boolean on = true;
 
+        // Beginning of the program
         System.out.println("Welcome to ABC Hotel. Please choose one of the following options to proceed: ");
-
-        while (true) {
+        while (on) {
             // a. Create/Update/Search guests detail (Search by name using keyword/s)
             System.out.println("------------------------");
             System.out.println("(1) Guest"); // include Payment under Guest
@@ -71,6 +71,8 @@ public class App {
             // e. Create/Update/Remove room service menu items.
             // RoomService Menu will be under here
             System.out.println("(4) Room Service Orders");
+            
+            System.out.println("(5) Shut Down");
             System.out.println("------------------------");
 
             int choice = sc.nextInt();
@@ -97,9 +99,8 @@ public class App {
                             System.out.println("Enter reservation code: ");
                             String code = sc.nextLine();
 
-
                             //Get the reservation from the reservationDB method
-                            Reservation guestR =  DataBase.getReservationFromReservationCode(code);
+                            Reservation guestR = DataBase.getReservationFromReservationCode(code);
 
                             //Get guest from reservation
                             Guest guest;
@@ -131,21 +132,16 @@ public class App {
                             sc.nextLine();
 
                             while(change!=7) {
-
                                 switch(change) {
-
                                     //Change Name
                                     case 1:
-
                                         System.out.println("Enter updated name: ");
                                         String updatedname = sc.nextLine();
                                         guest.getIc().setName(updatedname);
                                         break;
 
-
                                     //Change Country
                                     case 2:
-
                                         System.out.println("Enter updated country: ");
                                         String updatedcountry = sc.nextLine();
                                         guest.getIc().setCountry(updatedcountry);
@@ -153,7 +149,6 @@ public class App {
 
                                     //Change Gender
                                     case 3:
-
                                         System.out.println("Enter updated gender: ");
                                         String updatedgender = sc.nextLine();
                                         guest.getIc().setGender(updatedgender);
@@ -161,16 +156,13 @@ public class App {
 
                                     //Change  Nationality
                                     case 4:
-
                                         System.out.println("Enter updated nationality: ");
                                         String updatednationality = sc.nextLine();
                                         guest.getIc().setNationality(updatednationality);
                                         break;
 
-
                                     //Change Address
                                     case 5:
-
                                         System.out.println("Enter updated address: ");
                                         String updatedaddress = sc.nextLine();
                                         guest.getIc().setAddress(updatedaddress);
@@ -178,13 +170,10 @@ public class App {
 
                                     //Change Contact
                                     case 6:
-
                                         System.out.println("Enter updated contact: ");
                                         String updatedcontact = sc.nextLine();
                                         guest.getIc().setContact(updatedcontact);
                                         break;
-
-
 
                                 }//Switch statement for changing for specific choices breaks
 
@@ -194,12 +183,7 @@ public class App {
                                 String format = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
                                 System.out.printf(format, "Guest name:", "Guest country", "Guest gender", "Guest nationality", "Guest address", "Address contact" );
                                 System.out.printf(format, "================", "==================", "==================", "==================", "==================",  "==================");
-
-
                                 System.out.printf(format, guest.getIc().getName(), guest.getIc().getCountry(), guest.getIc().getGender(), guest.getIc().getNationality(), guest.getIc().getAddress(),guest.getIc().getContact());
-
-
-
 
                                 System.out.println("Select which do you wish to change: ");
                                 System.out.println("------------------------");
@@ -212,32 +196,23 @@ public class App {
                                 System.out.println("(7) Exit ");
                                 System.out.println("------------------------");
 
-
                                 change = sc.nextInt();
                                 sc.nextLine();
-
                             }
-
                             break;
-
 
                         //Print Guest details
                         case 2:
-
                             //Calling display guest method from reservationDB!!
                             DataBase.DisplayGuest();
-
                             break;
 
                         case 3:
                             break;
-
                     }
                     break;
 
                 case 2:
-
-
                     System.out.println("Please select an option for Reservations");
                     System.out.println("----------------------------------------------");
                     System.out.println("(1) Check-In (Create New Reservation)");
@@ -248,8 +223,6 @@ public class App {
                     System.out.println("(6) Exit");
                     System.out.println("-----------------------------------------------");
 
-
-
                     Guest myGuest;
                     Reservation myReservation;
                     String reservationCode;
@@ -257,7 +230,6 @@ public class App {
                     int revervationUpdatedFieldInt;
                     int option = sc.nextInt();
                     sc.nextLine();
-
 
                     switch(option) {
                         case 1:
@@ -360,39 +332,29 @@ public class App {
                             while (j != 1) {
                                 System.out.println("Please select which reservation detail you would like to update");
                                 System.out.println("------------------------");
-                                System.out.println("(1) Room Details");
-                                System.out.println("(2) Check-In Date");
-                                System.out.println("(3) Check-Out Date");
-                                System.out.println("(4) Number of Adults");
-                                System.out.println("(5) Number of Children");
-                                System.out.println("(6) Exit");
+                                System.out.println("(1) Check-In Date");
+                                System.out.println("(2) Check-Out Date");
+                                System.out.println("(3) Number of Adults");
+                                System.out.println("(4) Number of Children");
+                                System.out.println("(5) Exit");
                                 System.out.println("------------------------");
                                 option = sc.nextInt();
                                 sc.nextLine();
                                 switch(option) {
                                     case 1:
-                                        //
-                                        //
-                                        ////
-                                        //////Enter Code
-                                        ////
-                                        //
-                                        //
-                                        break;
-                                    case 2:
                                         System.out.println("Please Enter New Check-In Date: ");
                                         revervationUpdatedFieldString = sc.nextLine();
                                         myReservation.setCheckInDate(revervationUpdatedFieldString);
                                         System.out.println("Updated Check-In Date Is: " + myReservation.getCheckInDate());
                                         break;
-                                    case 3:
+                                    case 2:
                                         System.out.println("Please Enter New Check-Out Date: ");
                                         revervationUpdatedFieldString = sc.nextLine();
                                         myReservation.setCheckOutDate(revervationUpdatedFieldString);
                                         System.out.println("Updated Check-Out Date Is: " + myReservation.getCheckOutDate());
 
                                         break;
-                                    case 4:
+                                    case 3:
                                         System.out.println("Please Enter New Number of Adults: ");
                                         revervationUpdatedFieldInt = sc.nextInt();
                                         sc.nextLine();
@@ -400,19 +362,18 @@ public class App {
                                         System.out.println("Updated Number of Adults Is: " + myReservation.getAdults());
 
                                         break;
-                                    case 5:
+                                    case 4:
                                         System.out.println("Please Enter New Number of Children: ");
                                         revervationUpdatedFieldInt = sc.nextInt();
                                         sc.nextLine();
                                         myReservation.setChildren(revervationUpdatedFieldInt);
                                         System.out.println("Updated Number of Children Is: " + myReservation.getChildren());
                                         break;
-                                    case 6:
+                                    case 5:
                                         j=1;
                                         break;
                                 }
                             }
-
                             break;
                         case 4:
                             DataBase.displayAllReservations();
@@ -424,9 +385,8 @@ public class App {
                             break;
                     }
 
-
-
                     break;
+                    
                 case 3:
                     int userInput;
                     int roomNumber;
@@ -547,9 +507,8 @@ public class App {
                             }
 
                             // Below code has to change to get current time instead of manual input
-                            System.out.println("Enter The Time Of Room Service");
-                            time = sc.nextLine();
-                            RoomService newRoomService = new RoomService(time, menu);
+                            LocalDateTime now = LocalDateTime.now();
+                            RoomService newRoomService = new RoomService(now, menu);
                             while(true){
                                 System.out.println("(1) Order Food");
                                 System.out.println("(2) Exit");
@@ -597,7 +556,10 @@ public class App {
                 default:
                     System.out.printf("Input of %d Is Not Valid\n", choice);
                     break;
-
+                   
+            case 5:
+            	on = false; // Shutting down Hotel Reservation System
+            	break;
             }
         }
     }
