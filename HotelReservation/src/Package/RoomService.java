@@ -3,7 +3,7 @@ package Assignment;
 
 import java.util.Scanner;
 
-public class RoomService {
+public class RoomService implements Payment{
 
     public enum RoomServiceStatus{
         CONFIRMED,
@@ -16,6 +16,7 @@ public class RoomService {
     private String remarks = null;
     private double totalAmount = 0.0;
     private Menu menu;
+    private double payment;
 
     public RoomService(String dateTime, Menu menu) {
         this.dateTime = dateTime;
@@ -45,5 +46,9 @@ public class RoomService {
         return roomServiceStatus;
     }
     // include dateTime for RoomServiceStatus
+    
+    public double getPayment() {
+    	return this.payment;
+    }
 
 }
