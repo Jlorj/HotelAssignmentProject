@@ -19,17 +19,28 @@ public class Reservation implements Payment{
 
     Reservation(Guest guest){
 
+    	//Exception Handling for all the dates inputed
         this.guest = guest;
         Scanner sc = new Scanner(System.in);
-        System.out.println("Input check in date");
-        this.checkInDate = sc.nextLine();
-        System.out.println("Input check out date");
-        this.checkOutDate = sc.nextLine();
+        System.out.println("Input check in date (YYYY-MM-DD)");
+        String date_checkin = sc.nextLine();
+        this.checkInDate = Check_date.get_input(date_checkin);
+        
+        
+        System.out.println("Input check out date (YYYY-MM-DD)");
+        String date_checkout = sc.nextLine();
+        this.checkOutDate = Check_date.get_input(date_checkout);
+        
+      //Exception Handling for all number of children and adult inputed
         System.out.println("Input number of adults");
-        this.adults = sc.nextInt();
+        String num_adults = sc.nextLine();
+        this.adults = Check_if_int.get_input(num_adults,"adults");
+        
         System.out.println("Input number of children");
-        this.children = sc.nextInt();
-        sc.nextLine();
+        String num_children = sc.nextLine();
+        this.children = Check_if_int.get_input(num_children,"children");
+        
+      
     }
 
 
