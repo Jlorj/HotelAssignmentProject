@@ -1,4 +1,4 @@
-package Assignment
+package Assignment;
 
 public class DoubleRoom extends Room{
 
@@ -8,9 +8,8 @@ public class DoubleRoom extends Room{
         super(roomNum,wifi,smoking,view);
         this.bedtype = BedType.DOUBLE;
         this.roomtype = RoomType.DOUBLE;
-        this.weekendRate = 100.0;
-        this.weekdayRate = 50.0;
-
+        this.weekendRate = 150.0;
+        this.weekdayRate = 100.0;
 
     }
 }
