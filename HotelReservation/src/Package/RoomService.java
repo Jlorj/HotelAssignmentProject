@@ -1,7 +1,11 @@
 package Assignment;
 
-
 import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter; 
 
 public class RoomService implements Payment{
 
@@ -12,19 +16,19 @@ public class RoomService implements Payment{
     }
 
     protected RoomServiceStatus roomServiceStatus;
-    private String dateTime;
+    private LocalDate date;
+    private LocalTime time;
     private String remarks = null;
-    private double totalAmount = 0.0;
     private Menu menu;
     private double payment;
 
-    public RoomService(String dateTime, Menu menu) {
-        this.dateTime = dateTime;
+    public RoomService(Menu menu) {
         this.menu = menu;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+	public void setDateTime(LocalDate date, LocalTime time) {
+        this.date = date;
+        this.time = time;
     }
 
     public void setRemarks(String remarks) {
@@ -34,7 +38,9 @@ public class RoomService implements Payment{
     public boolean order(String foodName) {
         for (int i=0; i<menu.foods.size();i++) {
             if (foodName.equals(menu.foods.get(i).getName())) {
-                totalAmount += menu.foods.get(i).getPrice();
+            	this.date = LocalDate.now();
+            	this.time = LocalTime.now();
+                this.payment = menu.foods.get(i).getPrice();
                 this.roomServiceStatus = RoomServiceStatus.CONFIRMED;
                 return true;
             }
@@ -49,6 +55,13 @@ public class RoomService implements Payment{
     
     public double getPayment() {
     	return this.payment;
+    }
+    
+    public void printBill() {
+    	String format = "%-20s%-20s%-20s%n";
+    	DecimalFormat df = new DecimalFormat("0.00");
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("kk:mm:ss");
+        System.out.printf(format, this.date, this.time.format(formatter), "SGD" + df.format(this.payment), this.remarks);
     }
 
 }
