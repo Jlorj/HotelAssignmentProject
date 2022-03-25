@@ -50,5 +50,7 @@ public class RoomService implements Payment{
     public double getPayment() {
     	return this.payment;
     }
-
+    
+    public void hello(){
+    }
 }
