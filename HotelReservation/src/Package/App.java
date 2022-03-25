@@ -422,7 +422,6 @@ public class App {
                         case 6:
                             break;
                     }
-
                     break;
 
                 case 3:
@@ -466,13 +465,11 @@ public class App {
                             case 4:
                                 exit = true;
                                 break;
-
                         }
                         if (exit){
                             break;
                         }
                     }
-
                     break;
 
                 case 4:
@@ -542,8 +539,6 @@ public class App {
                                 break;
                             }
 
-
-                            
                             while(true){
                             	menu.printMenuItems();
                                 System.out.println("(1) Order Food");
