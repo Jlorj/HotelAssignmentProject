@@ -32,14 +32,14 @@ public class Check_country {
 		
 		Scanner sc = new Scanner(System.in);
 		Boolean end = check(s);
-		String new_input = null;
+
 		while(!end) {
 			System.out.println("Invalid country. Enter country:");
-			new_input = sc.nextLine();
-			end = check(new_input);
+			s = sc.nextLine();
+			end = check(s);
 		}
 		
-		return new_input;
+		return s;
 	}
 	
 }
