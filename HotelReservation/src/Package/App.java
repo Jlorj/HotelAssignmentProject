@@ -49,7 +49,7 @@ public class App {
         menu.addFood(muffin);
         menu.addFood(coke);
         // end
-
+        
         ReservationsDB DataBase = new ReservationsDB(); // creating a new DataBase of Reservations
         RoomServiceDB rsDB = new RoomServiceDB(); // creating a new Database for room service
         Scanner sc = new Scanner(System.in);
@@ -78,7 +78,7 @@ public class App {
 
             int choice = sc.nextInt();
             sc.nextLine();
-
+            
             switch (choice) {
                 case 1:
                     System.out.println("------------------------");
@@ -232,6 +232,7 @@ public class App {
                         System.out.println("(6) Exit");
                         System.out.println("-----------------------------------------------");
                         int option = sc.nextInt();
+                        sc.nextLine();
                     	switch(option) {
 	                        case 1:
 	                            myGuest = new Guest();
@@ -246,7 +247,6 @@ public class App {
 	                                System.out.println("(3) Deluxe");
 	                                System.out.println("(4) VIP Suite");
 	                                roomOption = sc.nextInt();
-	                                sc.nextLine();
 	                                if (roomOption < 1 || roomOption > 4){
 	                                    System.out.println("Input Is Invalid");
 	                                    continue;
@@ -289,6 +289,7 @@ public class App {
 	                                System.out.printf("There Are No More %s Rooms Available ", roomType);
 	                                break;
 	                            }
+	                            sc.nextLine();
 	                            String formattedRoomNum;
 	                            while(true){
 	                                System.out.println("Please choose a room");
@@ -320,7 +321,7 @@ public class App {
 	                                    else{
 	                                        exitStatus = true;
 	                                    }
-	                                    break;
+                                    break;
 	                                }
 	                                if (exitStatus){
 	                                    break;
@@ -352,7 +353,8 @@ public class App {
 	                                }
 	                                System.out.println("================================================================");
 	                                DataBase.getReservationFromReservationCode(reservationCode).printBill();
-	                                System.out.println("Your Total Bill is: " + df.format(totalPayment)); // maybe include a statement below to indicate paid by credit card or cash?
+	                                System.out.println("Your Total Bill is: SGD" + df.format(totalPayment)); // maybe include a statement below to indicate paid by credit card or cash?
+	                                System.out.println("================================================================");
 	                                DataBase.checkOut(reservationCode);
 	                            }
 	                            break;
@@ -398,7 +400,6 @@ public class App {
 	                                        revervationUpdatedFieldString = Check_date.get_input(update_checkout);
 	                                        myReservation.setCheckOutDate(revervationUpdatedFieldString);
 	                                        System.out.println("Updated Check-Out Date Is: " + myReservation.getCheckOutDate());
-	
 	                                        break;
 	                                    case 3:
 	                                    	//Exception handling for number of adults - same as previous 
@@ -484,134 +485,133 @@ public class App {
                     }
                     break;
 
-                case 4:
-                    System.out.println("---------------------------------");
-                    System.out.println("(1) Display Menu");
-                    System.out.println("(2) Add Menu Item");
-                    System.out.println("(3) Remove Menu Item");
-                    System.out.println("(4) Place New Room Service Order");
-                    System.out.println("(5) Check Room Service Status");
-                    System.out.println("(6) Exit");
-                    System.out.println("---------------------------------");
-
+                case 4:                   
                     String name;
                     String preparation;
                     double price;
                     boolean success;
-
-                    choice2 = sc.nextInt();
-                    sc.nextLine();
                     boolean on1 = true;
-                    while(on1) {
-                    	switch(choice2){
-
-                        case 1:
-                            menu.printMenuItems();
-                            break;
-
-                        case 2:
-                            System.out.println("Enter Name Of New Food");
-                            name = sc.nextLine();
-                            System.out.println("Enter Preparation Method Of New Food");
-                            preparation = sc.nextLine();
-                            
-                            //Exception checking here using check_if_int to check if price entered is a double!
-                            System.out.println("Enter the Price Of New Food");
-                            String price_input = sc.nextLine();
-                            price = Check_if_double.get_input(price_input, "Price of New Food");
-                        
-                            Food newFood = new Food(name, preparation, price);
-                            success = menu.addFood(newFood);
-                            if (success){
-                                System.out.println("Food Item Added Successfully!");
-                            }
-                            else{
-                                System.out.println("Food Item already in the Menu");
-                            }
-                            break;
-
-                        case 3:
-                            System.out.println("Enter Name of the Food To Be Removed");
-                            name = sc.nextLine();
-                            success = menu.removeFood(name);
-                            if (success){
-                                System.out.println("Food Item Removed Successfully");
-                            }
-                            else{
-                                System.out.println("Food Item Not In Menu");
-                            }
-                            break;
-
-                        case 4:
-                            String remarks;
-                            int continueOrder;
-                            boolean successfulOrder;
-                            String foodName;
-                            String code;
-                            System.out.println("Enter The Reservation Code");
-                            code = sc.nextLine();
-                            if (!DataBase.isValidCode(code)){
-                                System.out.println("Reservation Code Is Not Valid");
-                                System.out.println("Exiting...");
-                                break;
-                            }
-
-                            while(true){
-                            	menu.printMenuItems();
-                                System.out.println("(1) Order Food");
-                                System.out.println("(2) Exit");
-                                
-                                //Handle exception here! - check if input is integer!
-                                String continueOrder_input = sc.nextLine();
-                                continueOrder = Check_if_int.get_input(continueOrder_input, "(1) or (2)");
-                                
-                                if (continueOrder == 1){
-                                	RoomService newRoomService = new RoomService(menu);
-                                    System.out.println("Name Of The Food");
-                                    foodName = sc.nextLine();
-                                    successfulOrder = newRoomService.order(foodName);
-                                    if (successfulOrder){
-                                        System.out.println("You have ordered " + foodName);
-                                        System.out.println("Any remarks?");
-                                        remarks = sc.nextLine();
-                                        newRoomService.setRemarks(remarks);
-                                        rsDB.append(code, newRoomService);
-                                    }
-                                    else{
-                                        System.out.println("Food Item Not Available");
-                                    }
-                                }
-                                else{
-                                    break;
-                                }
-                            }
-                            
-                            break;
-
-                        case 5:
-                            System.out.println("Enter The Reservation Code");
-                            code = sc.nextLine();
-                            RoomService.RoomServiceStatus rsStatus = rsDB.checkStatus(code);
-                            if (rsStatus == null){
-                                System.out.println("The Guest Did Not Order Any Food");
-                            }
-                            else{
-                                System.out.println("The Current Status Is " + rsStatus);
-                            }
-                            continue;
-
-                        case 6:
-                        	on1 = false;
-                            break;
-                    	}
-                    }
                     
+                    while(on1) {
+	                	System.out.println("---------------------------------");
+	                    System.out.println("(1) Display Menu");
+	                    System.out.println("(2) Add Menu Item");
+	                    System.out.println("(3) Remove Menu Item");
+	                    System.out.println("(4) Place New Room Service Order");
+	                    System.out.println("(5) Check Room Service Status");
+	                    System.out.println("(6) Exit");
+	                    System.out.println("---------------------------------");
+	                    choice2 = sc.nextInt();                   
+	                    sc.nextLine();
+	                    
+	                	switch(choice2){
+	
+	                        case 1:
+	                            menu.printMenuItems();
+	                            break;
+	
+	                        case 2:
+	                            System.out.println("Enter Name Of New Food");
+	                            name = sc.nextLine();
+	                            System.out.println("Enter Preparation Method Of New Food");
+	                            preparation = sc.nextLine();
+	                            
+	                            //Exception checking here using check_if_int to check if price entered is a double!
+	                            System.out.println("Enter the Price Of New Food");
+	                            String price_input = sc.nextLine();
+	                            price = Check_if_double.get_input(price_input, "Price of New Food");
+	                        
+	                            Food newFood = new Food(name, preparation, price);
+	                            success = menu.addFood(newFood);
+	                            if (success){
+	                                System.out.println("Food Item Added Successfully!");
+	                            }
+	                            else{
+	                                System.out.println("Food Item already in the Menu");
+	                            }
+	                            break;
+	
+	                        case 3:
+	                            System.out.println("Enter Name of the Food To Be Removed");
+	                            name = sc.nextLine();
+	                            success = menu.removeFood(name);
+	                            if (success){
+	                                System.out.println("Food Item Removed Successfully");
+	                            }
+	                            else{
+	                                System.out.println("Food Item Not In Menu");
+	                            }
+	                            break;
+	
+	                        case 4:
+	                            String remarks;
+	                            int continueOrder;
+	                            boolean successfulOrder;
+	                            String foodName;
+	                            String code;
+	                            
+	                            System.out.println("Enter The Reservation Code");
+	                            code = sc.nextLine();
+	                            if (!DataBase.isValidCode(code)){
+	                                System.out.println("Reservation Code Is Not Valid");
+	                                System.out.println("Exiting...");
+	                                break;
+	                            }
+	
+	                            while(true){
+	                            	menu.printMenuItems();
+	                                System.out.println("(1) Order Food");
+	                                System.out.println("(2) Exit");
+	                                
+	                                //Handle exception here! - check if input is integer!
+	                                String continueOrder_input = sc.nextLine();
+	                                continueOrder = Check_if_int.get_input(continueOrder_input, "(1) or (2)");
+	                                
+	                                if (continueOrder == 1){
+	                                	RoomService newRoomService = new RoomService(menu);
+	                                    System.out.println("Name Of The Food");
+	                                    foodName = sc.nextLine();
+	                                    successfulOrder = newRoomService.order(foodName);
+	                                    if (successfulOrder){
+	                                        System.out.println("You have ordered " + foodName);
+	                                        System.out.println("Any remarks?");
+	                                        remarks = sc.nextLine();
+	                                        newRoomService.setRemarks(remarks);
+	                                        rsDB.append(code, newRoomService);
+	                                    }
+	                                    else{
+	                                        System.out.println("Food Item Not Available");
+	                                    }
+	                                }
+	                                else{
+	                                    break;
+	                                }
+	                            }
+	                            
+	                            break;
+	
+	                        case 5:
+	                            System.out.println("Enter The Reservation Code");
+	                            code = sc.nextLine();
+	                            RoomService.RoomServiceStatus rsStatus = rsDB.checkStatus(code);
+	                            if (rsStatus == null){
+	                                System.out.println("The Guest Did Not Order Any Food");
+	                            }
+	                            else{
+	                                System.out.println("The Current Status Is " + rsStatus);
+	                            }
+	                            continue;
+	                            	
+	                        case 6:
+	                        	on1 = false;
+	                            break;
+	                    }
+                    }
                     break;
-
+                    
                 default:
                     System.out.printf("Input of %d Is Not Valid\n", choice);
                     break;
-
             case 5:
                 on = false; // Shutting down Hotel Reservation System
                 break;
