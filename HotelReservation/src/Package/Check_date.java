@@ -10,7 +10,7 @@ public class Check_date {
 	public static Boolean check_format(String date) {
 		
 		try {
-			new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			new SimpleDateFormat("YYYY-MM-DD").parse(date);
 			return true;
 		}
 		
@@ -84,18 +84,18 @@ public class Check_date {
 		
 		Scanner sc = new Scanner(System.in);
 		Boolean end = check_format(date) && check_year(date) && check_month(date) && check_date(date);
-		String new_input = null;
+
 		
 		
 		while(!end) {
 			
 			System.out.println("Invalid Date. Enter Date:");
-			new_input = sc.nextLine();
-			end = check_format(new_input) && check_year(new_input) && check_month(new_input) && check_date(new_input);
+			date = sc.nextLine();
+			end = check_format(date) && check_year(date) && check_month(date) && check_date(date);
 
 		}
 		
-		return new_input;
+		return date;
 	}
 	
 	
