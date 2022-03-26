@@ -16,9 +16,7 @@ public class Reservation implements Payment{
     private String code;
     private double payment;
 
-
     Reservation(Guest guest){
-
     	//Exception Handling for all the dates inputed
         this.guest = guest;
         Scanner sc = new Scanner(System.in);
@@ -39,10 +37,7 @@ public class Reservation implements Payment{
         System.out.println("Input number of children");
         String num_children = sc.nextLine();
         this.children = Check_if_int.get_input(num_children,"children");
-        
-      
     }
-
 
     public String getReservationCode() {
         return code;
@@ -117,7 +112,6 @@ public class Reservation implements Payment{
         this.code = code;
     }
 
-
     public double getPayment() {
         // counting the number of weekdays and weekends and add the rates accordingly
         LocalDate parsedCheckInDate = LocalDate.parse(this.checkInDate);
@@ -139,5 +133,4 @@ public class Reservation implements Payment{
     	DecimalFormat df = new DecimalFormat("0.00");
     	System.out.println("The subtotal bill for your hotel stay is: SGD" + df.format(this.payment));
     }
-
 }
