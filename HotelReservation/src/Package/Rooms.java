@@ -1,27 +1,27 @@
-package Assignment
+package Assignment;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class Rooms {
-    private Room[] rooms;
+    protected Room[] rooms;
     int numRooms = 48;
     Rooms(){
         rooms = new Room[48];
     }
 
-    public void addRoom(int roomNum, String roomType, Boolean wifi, Boolean smoking, Boolean view){
+    public void addRoom(int num, String roomNum, String roomType, Boolean wifi, Boolean smoking, Boolean view){
         switch(roomType){
             case "SingleRoom":
-                rooms[roomNum - 1] = new SingleRoom(roomNum, wifi, smoking, view);
+                rooms[num - 1] = new SingleRoom(roomNum, wifi, smoking, view);
                 break;
             case "DoubleRoom":
-                rooms[roomNum - 1] = new DoubleRoom(roomNum, wifi, smoking, view);
+                rooms[num - 1] = new DoubleRoom(roomNum, wifi, smoking, view);
                 break;
             case "Deluxe":
-                rooms[roomNum - 1] = new Deluxe(roomNum, wifi, smoking, view);
+                rooms[num - 1] = new Deluxe(roomNum, wifi, smoking, view);
                 break;
             case "VIPSuite":
-                rooms[roomNum - 1] = new VIPSuite(roomNum, wifi, smoking, view);
+                rooms[num - 1] = new VIPSuite(roomNum, wifi, smoking, view);
                 break;
 
         }
@@ -116,4 +116,3 @@ public class Rooms {
     }
 
 }
-
