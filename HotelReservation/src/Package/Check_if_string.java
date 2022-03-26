@@ -22,17 +22,14 @@ public class Check_if_string {
 		
 		Scanner sc = new Scanner(System.in);
 		Boolean end = is_it_string(s);
-		String new_input = null;
 		
 		while(!end) {
 			
 			System.out.println("Invalid input. Enter " + choice +":");
-			new_input = sc.nextLine();
-			end = is_it_string(new_input);
+			s = sc.nextLine();
+			end = is_it_string(s);
 		
-			
 		}
-		
-		return new_input;
+		return s;
 	}
 }
