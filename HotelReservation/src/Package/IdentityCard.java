@@ -18,12 +18,14 @@ public class IdentityCard {
         //No error for name - no exception throw but check if no numbers present
         System.out.println("Input name");
         String name_input = sc.nextLine();
-        this.name = Check_if_string.get_input(name_input, "name");
+        name_input = Check_if_string.get_input(name_input, "name");
+        this.name = name_input; 
         
         //No error for country - no exception throw but check if no numbers present
         System.out.println("Input country");
         String country_input = sc.nextLine();
-        this.country = Check_country.get_input(country_input);
+        country_input = Check_country.get_input(country_input);
+        this.country = country_input; 
         
         //No error for gender - no exception thrown but check validity
         System.out.println("Input gender");
@@ -38,7 +40,8 @@ public class IdentityCard {
         //No error for nationality - no exception throw but check if no numbers present
         System.out.println("Input nationality");
         String nation_input = sc.nextLine();
-        this.nationality = Check_if_string.get_input(nation_input, "nationality");
+        nation_input = Check_if_string.get_input(nation_input, "nationality");
+        this.nationality = nation_input; 
        
         //No error for address - no exception throw OK to have numbers and string!
         System.out.println("Input address");
@@ -50,8 +53,9 @@ public class IdentityCard {
         Boolean end = true;
         while (end) {
 	        try {
-			//Try Converting to integer + check length of string
-			int phonenum = Integer.parseInt(strnum);	        	
+	        	//Try Converting to integer + check length of string
+	        	int phonenum = Integer.parseInt(strnum);
+	        	
 	        }
 	        
 	        //Catch exceptions 
@@ -68,7 +72,7 @@ public class IdentityCard {
 	                System.out.println("Invalid input. The length of the phone number should be 8. Input contact:");
 	                strnum = sc.nextLine();
 	                continue;
-	        }
+	        	}
 	        	
 	            this.contact = strnum;
 	            end = false;
