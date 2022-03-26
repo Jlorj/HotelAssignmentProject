@@ -1,6 +1,6 @@
 package Assignment;
 
-public abstract class Room {
+public class Room {
 
     public enum BedType{
         SINGLE,DOUBLE,MASTER;
@@ -19,13 +19,13 @@ public abstract class Room {
     protected RoomStatus status = RoomStatus.VACANT;
     protected double weekendRate;
     protected double weekdayRate;
-    private int roomNum;
+    private String roomNum;
     private Boolean wifi;
     private Boolean smoking;
     private Boolean view;
 
 
-    public Room(int roomNum, Boolean wifi, Boolean smoking, Boolean view) {
+    public Room(String roomNum, Boolean wifi, Boolean smoking, Boolean view) {
 
         this.roomNum = roomNum;
         this.wifi = wifi;
@@ -37,7 +37,7 @@ public abstract class Room {
         return this.status;
     }
 
-    public int getRoomNum(){
+    public String getRoomNum(){
         return roomNum;
     }
 
@@ -66,4 +66,3 @@ public abstract class Room {
     }
 
 }
-
