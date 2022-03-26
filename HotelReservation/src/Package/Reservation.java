@@ -22,12 +22,12 @@ public class Reservation implements Payment{
         Scanner sc = new Scanner(System.in);
         System.out.println("Input check in date (YYYY-MM-DD)");
         String date_checkin = sc.nextLine();
-        this.checkInDate = Check_date.get_input(date_checkin);
+        this.checkInDate = date_checkin; //Check_date.get_input(date_checkin);
         
         
         System.out.println("Input check out date (YYYY-MM-DD)");
         String date_checkout = sc.nextLine();
-        this.checkOutDate = Check_date.get_input(date_checkout);
+        this.checkOutDate = date_checkout; //Check_date.get_input(date_checkout);
         
       //Exception Handling for all number of children and adult inputed
         System.out.println("Input number of adults");
