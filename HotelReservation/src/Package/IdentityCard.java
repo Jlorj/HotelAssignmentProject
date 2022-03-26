@@ -40,44 +40,39 @@ public class IdentityCard {
         String nation_input = sc.nextLine();
         this.nationality = Check_if_string.get_input(nation_input, "nationality");
        
-        
         //No error for address - no exception throw OK to have numbers and string!
         System.out.println("Input address");
         this.address =  sc.nextLine();
-        
-        
+               
         //Convert into integers and throw exception if unable to do so & check length of number
         System.out.println("Input contact");
         String strnum = sc.nextLine();
         Boolean end = true;
         while (end) {
-        try {
-        	//Try Converting to integer + check length of string
-        	int phonenum = Integer.parseInt(strnum);
-        	
-        }
-        
-        //Catch exceptions 
-        catch(NumberFormatException n) {
-            System.out.println("Invalid input. Alphabets should not be in phone number. Input contact:");
-            strnum = sc.nextLine();
-            continue;
-        }
-        
-        finally {
-        	
-        	//Check the length of the phone number if its all numbers
-        	if(strnum.length() != 8) {
-                System.out.println("Invalid input. The length of the phone number should be 8. Input contact:");
-                strnum = sc.nextLine();
-                continue;
-        	}
-        	
-            this.contact = strnum;
-            end = false;
-
-        }
-        
+	        try {
+			//Try Converting to integer + check length of string
+			int phonenum = Integer.parseInt(strnum);	        	
+	        }
+	        
+	        //Catch exceptions 
+	        catch(NumberFormatException n) {
+	            System.out.println("Invalid input. Alphabets should not be in phone number. Input contact:");
+	            strnum = sc.nextLine();
+	            continue;
+	        }
+	        
+	        finally {
+	        	
+	        	//Check the length of the phone number if its all numbers
+	        	if(strnum.length() != 8) {
+	                System.out.println("Invalid input. The length of the phone number should be 8. Input contact:");
+	                strnum = sc.nextLine();
+	                continue;
+	        }
+	        	
+	            this.contact = strnum;
+	            end = false;
+	        }
         }
     }
 
@@ -128,6 +123,4 @@ public class IdentityCard {
     public void setContact(String contact){
         this.contact = contact;
     }
-
-
 }
