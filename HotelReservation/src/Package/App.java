@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.io.*;
 import java.time.*;
 
-public class App {
+public class App2 {
     public static void main(String[] args) throws ParseException {
 
     	
@@ -313,6 +313,33 @@ public class App {
 	                                    myReservation.generateCode();
 	                                    DataBase.appendRow(myReservation.getReservationCode(), myReservation);
 	                                    System.out.println("Reservation Is Successful");
+	                                    
+	                  // =================================== Adding in the printing of the reservation details if reservation is successful =============================//
+	                                    
+	                                    //Just to print the header nicely
+	                                    String pattern = "=";
+	                                    System.out.println(pattern.repeat(49)+ " Reservation Details " + pattern.repeat(49));
+	                                    System.out.println();
+	                                    
+	                                    //First print out guest details
+	                                    
+	                                    //Getting identity card from current reservation (aka myreservation)
+	                                    IdentityCard guest_info = myReservation.getGuest().getIc();
+	                                    String format1 = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
+	                                    String format2 = "%-20s%-20s%-20s%-20s%-20s%n";
+	                                    System.out.printf(format1, "Guest name:", "Guest country", "Guest gender", "Guest nationality", "Guest address", "Address contact" );
+	                                    System.out.printf(format1, "================", "==================", "==================", "==================", "==================",  "==================");
+	                                    System.out.printf(format1, guest_info.getName(), guest_info.getCountry(), guest_info.getGender(), guest_info.getNationality(), guest_info.getAddress(),guest_info.getContact());
+	                                    
+	                                    System.out.println();
+	                                    
+	                                    //Secondly print out this particular room details
+	                                    
+	                                    System.out.printf(format2, "Room Number:","Room Type:","Wifi:","Smoking","View");
+	                                    System.out.printf(format2, "================", "==================", "==================", "==================", "==================");
+	                                    System.out.printf(format2,room.getRoomNum(),room.getRoomType(),room.getWifi(),room.getWifi(),room.getSmoking(),room.getView());
+	                                    
+	                                    //Finally print out reservation code
 	                                    System.out.println("The Reservation Code Is " + myReservation.getReservationCode());
 	                                    break;
 	                                }
