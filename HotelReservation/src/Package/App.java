@@ -1,22 +1,25 @@
-package Assignment;
+package Package;
 
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 import java.io.*;
-import java.time.LocalDateTime;
+import java.time.*;
 
 public class App {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
+    	
         // Initialise all 48 rooms
         Rooms rooms = new Rooms();
-        String file = "src/RoomsInformation.csv";
+        String file = "RoomsInformation.csv";
         BufferedReader reader = null;
         String line = "";
         try{
@@ -54,10 +57,21 @@ public class App {
         RoomServiceDB rsDB = new RoomServiceDB(); // creating a new Database for room service
         Scanner sc = new Scanner(System.in);
         boolean on = true;
+        
+        
+        // Create Fixed Date
+        Date dt = new Date();
+
+        
+        
+        
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------//
         // Beginning of the program
         System.out.println("Welcome to ABC Hotel. Please choose one of the following options to proceed: ");
         while (on) {
+        	// Print Current Time
+        	System.out.println("Date & Time is = " + dt);
+
             // a. Create/Update/Search guests detail (Search by name using keyword/s)
             System.out.println("------------------------");
             System.out.println("(1) Guest"); // include Payment under Guest
@@ -74,6 +88,8 @@ public class App {
             System.out.println("(4) Room Service Orders");
 
             System.out.println("(5) Shut Down");
+            System.out.println("(6) Wait For 1 Hour");
+
             System.out.println("------------------------");
 
             int choice = sc.nextInt();
@@ -615,7 +631,15 @@ public class App {
             case 5:
                 on = false; // Shutting down Hotel Reservation System
                 break;
+            case 6: 
+            	break;
             }
-        }
+            
+            //Adds an additional Hour At The End Of The While Loop
+            Calendar c = Calendar.getInstance();
+            c.setTime(dt);
+            c.add(Calendar.HOUR, 1);
+            dt = c.getTime();
+        }//End of While Loop
     }
 }
