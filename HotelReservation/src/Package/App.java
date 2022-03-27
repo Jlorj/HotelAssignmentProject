@@ -1,4 +1,4 @@
-package Package;
+package Assignment;
 
 
 import java.io.BufferedReader;
@@ -19,7 +19,7 @@ public class App {
     	
         // Initialise all 48 rooms
         Rooms rooms = new Rooms();
-        String file = "RoomsInformation.csv";
+        String file = "src/RoomsInformation.csv";
         BufferedReader reader = null;
         String line = "";
         try{
@@ -61,10 +61,6 @@ public class App {
         
         // Create Fixed Date
         Date dt = new Date();
-
-        
-        
-        
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------//
         // Beginning of the program
         System.out.println("Welcome to ABC Hotel. Please choose one of the following options to proceed: ");
@@ -370,7 +366,7 @@ public class App {
 	                                System.out.println("================================================================");
 	                                DataBase.getReservationFromReservationCode(reservationCode).printBill();
 	                                System.out.println("Your Total Bill is: SGD" + df.format(totalPayment)); // maybe include a statement below to indicate paid by credit card or cash?
-	                                System.out.println("================================================================");
+	                                System.out.println("================================================================");	                                
 	                                DataBase.checkOut(reservationCode);
 	                            }
 	                            break;
@@ -440,10 +436,12 @@ public class App {
 	                            }
 	                            break;
 	                        case 4:
-	                            DataBase.displayAllReservations();
+	                        	System.out.println("Please enter reservation code: ");
+	                            reservationCode = sc.nextLine();
+	                            DataBase.printReservationFromReservationCode(reservationCode);                           
 	                            break;
 	                        case 5:
-	                            System.out.println(DataBase.getReservationDataBase());
+	                        	DataBase.displayAllReservations();                            
 	                            break;
 	                        case 6:
 	                        	on2 = false;
