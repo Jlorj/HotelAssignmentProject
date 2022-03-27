@@ -2,7 +2,7 @@ package Assignment;
 
 public class VIPSuite extends Room{
 
-    public VIPSuite (int roomNum, Boolean wifi, Boolean smoking, Boolean view) {
+    public VIPSuite (String roomNum, Boolean wifi, Boolean smoking, Boolean view) {
 
         super(roomNum,wifi,smoking,view);
         this.bedtype = BedType.MASTER;
