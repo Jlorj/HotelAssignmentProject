@@ -3,7 +3,7 @@ package Assignment;
 public class DoubleRoom extends Room{
 
 
-    public DoubleRoom (int roomNum, Boolean wifi, Boolean smoking, Boolean view) {
+    public DoubleRoom (String roomNum, Boolean wifi, Boolean smoking, Boolean view) {
 
         super(roomNum,wifi,smoking,view);
         this.bedtype = BedType.DOUBLE;
