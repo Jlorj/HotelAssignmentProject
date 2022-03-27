@@ -18,11 +18,30 @@ public class Check_date {
 			return false;
 		}
 		
+		
+	}
+	
+	//check length example 2022-03-4 will pass the parsing but cannot access index
+	
+	public static Boolean length_check(String date) {
+		
+		//try to slice string in different format
+		try {
+			date.substring(0,4);
+			date.substring(5,7);;
+			date.substring(8,10);
+			return true;
+		}
+		
+		catch (StringIndexOutOfBoundsException e) {
+			return false;
+		}
+		
 	}
 	//Check year
 	public static Boolean check_year(String date) {
 		
-		//Slice the year from string 
+		//Slice the year from string  - catch exception
 		String year = date.substring(0,4);
 		
 		try {
@@ -83,7 +102,7 @@ public class Check_date {
 	public static String get_input(String date) {
 		
 		Scanner sc = new Scanner(System.in);
-		Boolean end = check_format(date) && check_year(date) && check_month(date) && check_date(date);
+		Boolean end = check_format(date) && length_check(date) && check_year(date) && check_month(date) && check_date(date);
 
 		
 		
@@ -91,7 +110,7 @@ public class Check_date {
 			
 			System.out.println("Invalid Date. Enter Date:");
 			date = sc.nextLine();
-			end = check_format(date) && check_year(date) && check_month(date) && check_date(date);
+			end = check_format(date) && length_check(date) && check_year(date) && check_month(date) && check_date(date);
 
 		}
 		
