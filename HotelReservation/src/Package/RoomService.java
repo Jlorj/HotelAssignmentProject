@@ -20,6 +20,7 @@ public class RoomService implements Payment{
     private LocalTime time;
     private String remarks = null;
     private Menu menu;
+    private String name;
     private double payment;
 
     public RoomService(Menu menu) {
@@ -40,6 +41,7 @@ public class RoomService implements Payment{
             if (foodName.equals(menu.foods.get(i).getName())) {
             	this.date = LocalDate.now();
             	this.time = LocalTime.now();
+            	this.name = foodName;
                 this.payment = menu.foods.get(i).getPrice();
                 this.roomServiceStatus = RoomServiceStatus.CONFIRMED;
                 return true;
@@ -58,10 +60,10 @@ public class RoomService implements Payment{
     }
     
     public void printBill() {
-    	String format = "%-20s%-20s%-20s%n";
+    	String format = "%-20s%-20s%-20s%-20s%-20s%n";
     	DecimalFormat df = new DecimalFormat("0.00");
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("kk:mm:ss");
-        System.out.printf(format, this.date, this.time.format(formatter), "SGD" + df.format(this.payment), this.remarks);
+        System.out.printf(format, this.date, this.name, this.time.format(formatter), "SGD" + df.format(this.payment), this.remarks);
     }
 
 }
