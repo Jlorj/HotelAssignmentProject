@@ -64,5 +64,13 @@ public class Room {
     public RoomStatus getStatus(){
         return status;
     }
+    
+    public void setWeekdayRate(double weekdayRate) {
+    	this.weekdayRate  = weekdayRate;
+    }
+    
+    public void setWeekendRate(double weekendRate) {
+    	this.weekendRate  = weekendRate;
+    }
 
 }
