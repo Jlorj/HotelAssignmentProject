@@ -13,11 +13,10 @@ import java.util.Scanner;
 import java.io.*;
 import java.time.*;
 
-public class App2 {
+public class App {
     public static void main(String[] args) throws ParseException {
 
-    	
-        // Initialise all 48 rooms
+        // Initialize all 48 rooms
         Rooms rooms = new Rooms();
         String file = "src/RoomsInformation.csv";
         BufferedReader reader = null;
@@ -43,21 +42,32 @@ public class App2 {
         }
         //end
 
-        // Initialising the menu
+        // Initializing the menu
         Menu menu = new Menu();
-        Food friedRice = new Food("Fried Rice", "Fried", 6.5);
+        Food friedRice = new Food("Fried Rice", "Stir-Fry", 8.5);
         Food muffin = new Food("Muffin", "Baked", 2);
-        Food coke = new Food("Coke", "Cold",3);
+        Food coke = new Food("Coke", "Cold", 3);
+        Food salad = new Food("Salad", "Cold", 7);
+        Food grilledChicken = new Food("Grilled Chicken", "Grilled", 13);
         menu.addFood(friedRice);
         menu.addFood(muffin);
         menu.addFood(coke);
+        menu.addFood(salad);
+        menu.addFood(grilledChicken);
         // end
         
+        //Initializing the Reservations Database
         ReservationsDB DataBase = new ReservationsDB(); // creating a new DataBase of Reservations
         RoomServiceDB rsDB = new RoomServiceDB(); // creating a new Database for room service
         Scanner sc = new Scanner(System.in);
         boolean on = true;
+        //end
         
+        // Intializing the Discount Codes List
+        ArrayList<String> discountList = new ArrayList<String>();
+        discountList.add("HAPPYHOLS");
+        discountList.add("USECREDITCARD");
+        //end
         
         // Create Fixed Date
         Date dt = new Date();
@@ -92,11 +102,13 @@ public class App2 {
             sc.nextLine();
             
             switch (choice) {
+          //--------------------------------------(1) Guest----------------------------------------------------//
                 case 1:
                     System.out.println("------------------------");
                     System.out.println("(1) Update guest details");
-                    System.out.println("(2) Display Guest details");
-                    System.out.println("(3) Exit");
+                    System.out.println("(2) Search Guest details");
+                    System.out.println("(3) Display all Guest details");
+                    System.out.println("(4) Exit");
                     System.out.println("------------------------");
                     int choice2 = sc.nextInt();
                     sc.nextLine();
@@ -217,14 +229,20 @@ public class App2 {
                         //Print Guest details
                         case 2:
                             //Calling display guest method from reservationDB!!
-                            DataBase.DisplayGuest();
+                        	System.out.println("Please enter the Guest Name:");
+                        	String name = sc.nextLine();                       	
+                            DataBase.displayGuest(name);                           
                             break;
 
                         case 3:
+                        	DataBase.displayAllGuests();
                             break;
+                        
+                        case 4:
+                        	break;
                     }
                     break;
-
+                //--------------------------------------(2) Reservations----------------------------------------------------//
                 case 2:
                 	Guest myGuest;
                     Reservation myReservation;
@@ -236,7 +254,7 @@ public class App2 {
                     while(on2) {
                     	System.out.println("Please select an option for Reservations");
                         System.out.println("----------------------------------------------");
-                        System.out.println("(1) Check-In (Create New Reservation)");
+                        System.out.println("(1) Check-In (Walk-in or Reservation)");
                         System.out.println("(2) Check-Out (Delete Reservation)"); // printing out the bill invoice as well
                         System.out.println("(3) Update an Existing Reservation");
                         System.out.println("(4) Display a Reservation by Reservation Code");
@@ -247,11 +265,16 @@ public class App2 {
                         sc.nextLine();
                     	switch(option) {
 	                        case 1:
+	                        	System.out.println("Walk-in or Reservation?");
+	                            System.out.println("(1) Walk-in");
+	                            System.out.println("(2) Reservation");
+	                            int stay = sc.nextInt();
 	                            myGuest = new Guest();
 	                            myReservation = new Reservation(myGuest);
 	                            int roomOption = 0;
 	                            roomOption = 0;
 	                            String roomType;
+	                            
 	                            while(true){
 	                                System.out.println("Input Room Type:");
 	                                System.out.println("(1) Single Room");
@@ -308,7 +331,10 @@ public class App2 {
 	                                formattedRoomNum = sc.nextLine();
 	                                if (vacancy.contains(formattedRoomNum)){
 	                                    Room room = rooms.getRoom(rooms.deformatRoomNum(formattedRoomNum));
-	                                    room.setStatus(Room.RoomStatus.RESERVED);
+	                                    if (stay == 1) {
+	                                    	room.setStatus(Room.RoomStatus.OCCUPIED);
+	                                    }
+	                                    else room.setStatus(Room.RoomStatus.RESERVED);
 	                                    myReservation.setRoom(room);
 	                                    myReservation.generateCode();
 	                                    DataBase.appendRow(myReservation.getReservationCode(), myReservation);
@@ -335,7 +361,7 @@ public class App2 {
 	                                    
 	                                    //Secondly print out this particular room details
 	                                    
-	                                    System.out.printf(format2, "Room Number:","Room Type:","Wifi:","Smoking","View");
+	                                    System.out.printf(format2, "Room Number","Room Type","Wifi","Smoking","View");
 	                                    System.out.printf(format2, "================", "==================", "==================", "==================", "==================");
 	                                    System.out.printf(format2,room.getRoomNum(),room.getRoomType(),room.getWifi(),room.getWifi(),room.getSmoking(),room.getView());
 	                                    
@@ -374,30 +400,45 @@ public class App2 {
 	                            if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
 	                                System.out.println("No reservation under this code has been made!");
 	                            } else {
-	                            	String format = "%-20s%-20s%-20s%n";
+	                            	String format = "%-20s%-20s%-20s%-20s%-20s%n";
 	                            	DecimalFormat df = new DecimalFormat("0.00");
 	                            	double totalPayment = DataBase.getReservationFromReservationCode(reservationCode).getPayment();
 	                                System.out.println("#" + reservationCode + " INVOICE");
 	                                System.out.println("Description");
+	                                System.out.println("Check-in Date:  " + DataBase.getReservationFromReservationCode(reservationCode).getCheckInDate());
+	                                System.out.println("Check-out Date: " + DataBase.getReservationFromReservationCode(reservationCode).getCheckOutDate());
 	                                System.out.println("========================================================");
 	                                System.out.println("Your Room Service Orders");
 	                                System.out.println("========================================================");
-	                                System.out.printf(format, "Date Ordered", "Time Ordered", "Amount", "Remarks");
-	                                System.out.printf(format, "================", "================", "================", "================");
+	                                System.out.printf(format, "Date Ordered", "Food Ordered", "Time Ordered", "Amount", "Remarks");
+	                                System.out.printf(format, "================", "================", "================", "================", "================");
 	                                if (rsDB.rsDB.get(reservationCode) != null) {
 	                                	for (int i=0;i<rsDB.rsDB.get(reservationCode).size();i++) {
 	                                    	rsDB.rsDB.get(reservationCode).get(i).printBill();
 	                                    	totalPayment += rsDB.rsDB.get(reservationCode).get(i).getPayment();
 	                                    }
 	                                }
-	                                System.out.println("================================================================");
+	                                System.out.println("========================================================");
 	                                DataBase.getReservationFromReservationCode(reservationCode).printBill();
-	                                System.out.println("Your Total Bill is: SGD" + df.format(totalPayment)); // maybe include a statement below to indicate paid by credit card or cash?
-	                                System.out.println("================================================================");	                                
+	                                System.out.println("Subtotal: SGD"  + df.format(totalPayment));
+	                                System.out.println("Enter Discount Code:");
+	                                String discountCode = sc.next();
+	                                for (int i=0;i<discountList.size();i++) {
+	                                	if (discountCode.equals(discountList.get(i))) {
+	                                		totalPayment *= (1-DataBase.getReservationFromReservationCode(reservationCode).getDiscount());
+	                                	}
+	                                }
+	                                System.out.println("GST:" + DataBase.getReservationFromReservationCode(reservationCode).stringGST);
+	                                System.out.println("Service Charge: " + DataBase.getReservationFromReservationCode(reservationCode).stringServiceTax);
+	                                totalPayment += DataBase.getReservationFromReservationCode(reservationCode).totalTax * totalPayment;
+	                                System.out.println("Your Total Bill is: SGD" + df.format(totalPayment)); 
+	                                // maybe include a statement below to indicate paid by credit card or cash?
+	                                DataBase.getReservationFromReservationCode(reservationCode).useCreditCard();
+	                                System.out.println("========================================================");	                                
 	                                DataBase.checkOut(reservationCode);
 	                            }
 	                            break;
-	
+	                            
 	                        case 3:
 	                            System.out.println("Please enter reservation code: ");
 	                            reservationCode = sc.nextLine();
@@ -476,13 +517,13 @@ public class App2 {
 	                    	}                        
                     }
                     break;
-
+                //--------------------------------------(3) Room Details----------------------------------------------------//
                 case 3:
                     int userInput;
                     String roomNumber;
                     String statusStr;
-                    boolean exit = false;
-                    while(true){
+                    boolean exit = true;
+                    while(exit){
                         System.out.println("---------------------------------------");
                         System.out.println("(1) Update Room Status");
                         System.out.println("(2) Print Vacant Rooms By Room Type");
@@ -493,39 +534,76 @@ public class App2 {
                         sc.nextLine();
                         switch(userInput){
                             case 1:
+                            	boolean found = false;
                                 System.out.println("Input the Room Number");
                                 roomNumber = sc.nextLine();
                                 for (int i=0; i<48;i++) {
                                 	if (roomNumber.equals(rooms.rooms[i].getRoomNum())) {
-                                		System.out.println("Enter New Status For Room Number " + roomNumber);
-                                        statusStr = sc.nextLine();
-                                        if (statusStr.equals("VACANT") || statusStr.equals("OCCUPIED") || statusStr.equals("RESERVED") || statusStr.equals("MAINTENANCE")){
-                                            rooms.getRoom(i+1).setStatus(Room.RoomStatus.valueOf(statusStr));
-                                        }
-                                        else{
-                                            System.out.println(statusStr + " Is Not A Valid Room Status");
-                                        }
-                                        break;
+                                		found = true;
+                                		boolean update = true;
+                                		while (update) {
+	                                		System.out.println("What would you like to update?");
+	                                		System.out.println("(1) Change Weekday Rate");
+	                                        System.out.println("(2) Change Weekend Rate");
+	                                        System.out.println("(3) Change Room Status");
+	                                        System.out.println("(4) Exit");
+	                                        int choice1 = sc.nextInt();
+	                                        switch(choice1) {
+		                                        case 1:
+		                                        	System.out.println("Current room's Weekday rate: " + rooms.rooms[i].weekdayRate);
+		                                        	System.out.println("Set Weekday Rate:");
+		                                        	double weekdayRate = sc.nextDouble();		                                      	
+		                                        	rooms.rooms[i].setWeekdayRate(weekdayRate);
+		                                        	System.out.println("Updated room's Weekday rate: " + rooms.rooms[i].weekdayRate);
+		                                        	break;
+		                                        	
+		                                        case 2:
+		                                        	System.out.println("Current room's Weekend rate: " + rooms.rooms[i].weekendRate);
+		                                        	System.out.println("Set Weekend Rate:");
+		                                        	double weekendRate = sc.nextDouble();
+		                                        	rooms.rooms[i].setWeekendRate(weekendRate);
+		                                        	System.out.println("Updated room's Weekend rate: " + rooms.rooms[i].weekendRate);
+		                                        	break;
+		                                        	
+		                                        case 3:
+		                                        	System.out.println("Enter New Status For Room Number " + roomNumber);
+		                                        	sc.nextLine();
+		                                            statusStr = sc.nextLine();		                                            
+		                                            if (statusStr.equals("VACANT") || statusStr.equals("OCCUPIED") || statusStr.equals("RESERVED") || statusStr.equals("MAINTENANCE")){
+		                                                rooms.getRoom(i+1).setStatus(Room.RoomStatus.valueOf(statusStr));
+		                                            }
+		                                            else{
+		                                                System.out.println(statusStr + " Is Not A Valid Room Status");
+		                                            }
+		                                        	break;
+		                                        case 4:
+		                                        	update = false;
+		                                        	break;
+		                                        	
+		                                        default: update = true;
+	                                        }
+                                		}
                                 	}
-                                	if (i == 48) System.out.println("Invalid Room Number");
                                 }
+                                if (!found) System.out.println("Invalid Room Number");
                                 break;
+                                
                             case 2:
                                 rooms.printVacantRooms();
                                 break;
+                                
                             case 3:
                                 rooms.printRoomsByStatusMain();
                                 break;
-                            case 4:
-                                exit = true;
+                                
+                            case 4:                           	
+                                exit = false;
                                 break;
                         }
-                        if (exit){
-                            break;
-                        }
+
                     }
                     break;
-
+                  //------------------------------------(4) Room Service Orders----------------------------------------------------//
                 case 4:                   
                     String name;
                     String preparation;
@@ -538,9 +616,10 @@ public class App2 {
 	                    System.out.println("(1) Display Menu");
 	                    System.out.println("(2) Add Menu Item");
 	                    System.out.println("(3) Remove Menu Item");
-	                    System.out.println("(4) Place New Room Service Order");
-	                    System.out.println("(5) Check Room Service Status");
-	                    System.out.println("(6) Exit");
+	                    System.out.println("(4) Update Menu Item");
+	                    System.out.println("(5) Place New Room Service Order");
+	                    System.out.println("(6) Check Room Service Status");
+	                    System.out.println("(7) Exit");
 	                    System.out.println("---------------------------------");
 	                    choice2 = sc.nextInt();                   
 	                    sc.nextLine();
@@ -583,8 +662,21 @@ public class App2 {
 	                                System.out.println("Food Item Not In Menu");
 	                            }
 	                            break;
-	
+	                        
 	                        case 4:
+	                        	menu.printMenuItems();
+	                        	System.out.println("Enter Name of the Food");
+	                        	name = sc.nextLine();
+	                        	success = menu.updateMenu(name);
+	                        	if (success){
+	                                System.out.println("Food Item Updated Successfully");
+	                            }
+	                            else{
+	                                System.out.println("Food Item Not In Menu");
+	                            }
+	                        	break;
+	                        	
+	                        case 5:
 	                            String remarks;
 	                            int continueOrder;
 	                            boolean successfulOrder;
@@ -631,7 +723,7 @@ public class App2 {
 	                            
 	                            break;
 	
-	                        case 5:
+	                        case 6:
 	                            System.out.println("Enter The Reservation Code");
 	                            code = sc.nextLine();
 	                            RoomService.RoomServiceStatus rsStatus = rsDB.checkStatus(code);
@@ -643,7 +735,7 @@ public class App2 {
 	                            }
 	                            continue;
 	                            	
-	                        case 6:
+	                        case 7:
 	                        	on1 = false;
 	                            break;
 	                    }
@@ -653,9 +745,11 @@ public class App2 {
                 default:
                     System.out.printf("Input of %d Is Not Valid\n", choice);
                     break;
+             //----------------------------------(5) Shut Down-------------------------------------//
             case 5:
                 on = false; // Shutting down Hotel Reservation System
                 break;
+             //----------------------------------(6) Time Lapse-------------------------------------//
             case 6: 
             	break;
             }
