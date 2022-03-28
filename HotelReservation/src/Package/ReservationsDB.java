@@ -74,7 +74,24 @@ public class ReservationsDB {
     }
 
 
-    public void DisplayGuest() {
+    public void displayGuest(String guestName) {
+
+        String format = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
+        boolean found = false;
+        
+        for(int i=0;i<ReservationDataBase.size();i++) {
+        	if (((Reservation) ((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getName().equals(guestName)) {
+        		System.out.printf(format, "Guest name", "Guest country", "Guest gender", "Guest nationality", "Guest address", "Address contact" );
+                System.out.printf(format, "================", "==================", "==================", "==================", "==================",  "==================");
+        		System.out.printf(format, (((Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getName()), ((Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getCountry(), ((Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getGender(), ((Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getNationality(), ((Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getAddress(), ((Reservation)((ArrayList<Object>) ReservationDataBase.get(i)).get(1)).getGuest().getIc().getContact());
+        		found = true;
+        	}
+        	
+        }
+        if (!found) System.out.println("Sorry, we cannot find the Guest Name in our Guest List!");
+    }
+    
+    public void displayAllGuests() {
 
         ArrayList<Object> retrievDB = this.ReservationDataBase;
 
@@ -86,10 +103,7 @@ public class ReservationsDB {
 
             ArrayList<Object> row = (ArrayList<Object>) retrievDB.get(i);
 
-            System.out.printf(format, ( ((Reservation)row.get(1)).getGuest().getIc().getName()), ((Reservation)row.get(1)).getGuest().getIc().getCountry(),  ((Reservation)row.get(1)).getGuest().getIc().getGender(), ((Reservation)row.get(1)).getGuest().getIc().getNationality(),   ((Reservation)row.get(1)).getGuest().getIc().getAddress(), ((Reservation)row.get(1)).getGuest().getIc().getContact()  );
-
-
-
+            System.out.printf(format, ( ((Reservation)row.get(1)).getGuest().getIc().getName()), ((Reservation)row.get(1)).getGuest().getIc().getCountry(),  ((Reservation)row.get(1)).getGuest().getIc().getGender(), ((Reservation)row.get(1)).getGuest().getIc().getNationality(), ((Reservation)row.get(1)).getGuest().getIc().getAddress(), ((Reservation)row.get(1)).getGuest().getIc().getContact());
         }
     }
 
