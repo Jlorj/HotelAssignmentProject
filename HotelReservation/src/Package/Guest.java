@@ -9,12 +9,6 @@ public class Guest {
     Guest(){
         Scanner sc = new Scanner(System.in);
         this.ic = new IdentityCard();
-        System.out.println("Using Credit Card or Cash?");
-        String reply = sc.nextLine();
-        // verify user input
-        if (reply.equals("Credit Card") || reply.equals("credit card")){
-            cc = new CreditCard();
-        }
     }
 
     public IdentityCard getIc(){
