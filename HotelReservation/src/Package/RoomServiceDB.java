@@ -1,4 +1,4 @@
-package Assignment
+package Package;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,4 +33,13 @@ public class RoomServiceDB {
         ArrayList<RoomService> cell = rsDB.get(reservationCode);
         return cell.get(cell.size() - 1).getStatus();
     }
+    
+    public RoomService getRoomService(String reservationCode){
+        if (!rsDB.containsKey(reservationCode)){
+            return null;
+        }
+        ArrayList<RoomService> cell = rsDB.get(reservationCode);
+        return cell.get(cell.size() - 1);
+    }
+
 }

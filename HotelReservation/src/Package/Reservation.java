@@ -1,4 +1,4 @@
-package Assignment;
+package Package;
 
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
