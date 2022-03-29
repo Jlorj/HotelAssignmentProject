@@ -1,4 +1,4 @@
-package Assignment
+package Assignment;
 
 import java.util.Scanner;
 
@@ -14,7 +14,8 @@ public class CreditCard {
         System.out.println("Input credit card number");
         this.creditCardNumber = sc.nextLine();
         System.out.println("Input expiration date");
-        this.expirationDate = sc.nextLine();
+        String date = sc.nextLine();
+        this.expirationDate = Check_date.get_input(date);
     }
 
     public String getCardHolderName(){
