@@ -1,5 +1,6 @@
 package Assignment;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -148,9 +149,6 @@ public class App {
                         	tempRS = rsDB.getRoomService(tempReservation.getReservationCode());
                         	System.out.println("This is the Room Service" + tempRS);
                         	
-                        	
-
-        					
         					if(curTime.isAfter(tempRS.getOrderDateandTime()) ) {
                         		tempRS.setRoomServiceStatus(tempRS.roomServiceStatus.CONFIRMED);
                         	}
@@ -167,10 +165,6 @@ public class App {
                     }
 
         		}
-        		
-        	
-            	
-        		        		
         		
         		if(anyReservationCheckedOut == true) {
         			System.out.println("========================");
