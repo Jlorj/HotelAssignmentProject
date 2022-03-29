@@ -1,6 +1,4 @@
 package Assignment;
-	
-
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -13,13 +11,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
-
-import Assignment.Room.RoomStatus;
-
 import java.io.*;
 import java.time.*;
 
-public class App4 {
+public class App {
     public static void main(String[] args) throws ParseException {
 
         // Initialize all 48 rooms
@@ -132,7 +127,7 @@ public class App4 {
         			dateMargin = DateCheck.getZeroTimeDate(dt).compareTo(DateCheck.getZeroTimeDate(tempCheckOutDate));
         			
         			//If current day is the checkout date
-        			if(dateMargin == 0) {
+        			if(dateMargin ==  0|| dateMargin > 0) {
         				System.out.println("========================");
         				System.out.println("This reservation code has exceeded the check out time: " + tempReservation.getReservationCode());
         				System.out.println("Guest Name is: " + tempReservation.getGuest().getIc().getName());
@@ -384,16 +379,12 @@ public class App4 {
 	                        	System.out.println("Walk-in or Reservation?");
 	                            System.out.println("(1) Walk-in");
 	                            System.out.println("(2) Reservation");
-	                            String choice_stay = sc.nextLine();
-	     	                   //================= Added Exception Handling =====================//
-	     	                            int stay = Check_if_int.get_input(choice_stay, "1 or 2");
-	     	                            while(stay!=1 && stay!=2)
-	     	                            	stay = Check_if_int.get_input(choice_stay, "1 or 2");
-	     	                            myGuest = new Guest();
-	     	                            myReservation = new Reservation(myGuest);
-	     	                            int roomOption = 0;
-	     	                            roomOption = 0;
-	     	                            String roomType;
+	                            int stay = sc.nextInt();
+	                            myGuest = new Guest();
+	                            myReservation = new Reservation(myGuest);
+	                            int roomOption = 0;
+	                            roomOption = 0;
+	                            String roomType;
 	                            
 	                            while(true){
 	                                System.out.println("Input Room Type:");
@@ -645,114 +636,15 @@ public class App4 {
                     boolean exit = true;
                     while(exit){
                         System.out.println("---------------------------------------");
-                        System.out.println("(1) Check room availability");
-                        System.out.println("(2) Update Room Status");
-                        System.out.println("(3) Print Vacant Rooms By Room Type");
-                        System.out.println("(4) Print ALL Rooms BY Status");
-                        System.out.println("(5) Exit");
+                        System.out.println("(1) Update Room Status");
+                        System.out.println("(2) Print Vacant Rooms By Room Type");
+                        System.out.println("(3) Print ALL Rooms BY Status");
+                        System.out.println("(4) Exit");
                         System.out.println("---------------------------------------");
                         userInput = sc.nextInt();
                         sc.nextLine();
-                        
                         switch(userInput){
-                        
-                      //Adding case 1 - Checking of room availability details by entering room number 
-                    	case 1:
-                        	int roomnum_or_guest = 0;
-                        	boolean roomcheck = true;
-                        	boolean found_room = false;
-                        	while(roomcheck) {
-                        		found_room = false;
-	                        	System.out.println("Check room availability via:");
-	                        	System.out.println("(1) Room Number");
-	                        	System.out.println("(2) Guest Name");
-	                        	System.out.println("(3) Exit");
-	                        	int check_choice = sc.nextInt();
-	                        	System.out.println();
-	                        	//Inner switch statement for  either check room by room number or guest details
-	                        	switch(check_choice) {
-	                        	case 1:
-	                        		sc.nextLine();
-	                                System.out.println("Input the Room Number");
-	                                roomNumber = sc.nextLine();
-	                                for (int i = 0; i<48; i++) {
-	                                	if (roomNumber.equals(rooms.rooms[i].getRoomNum())) {
-	                                	//Find the room status first
-	                                	RoomStatus room_status = rooms.rooms[i].getStatus();
-	                                	String available;
-	                                	if(room_status.equals(RoomStatus.OCCUPIED) || room_status.equals(RoomStatus.RESERVED) || room_status.equals(RoomStatus.MAINTENANCE)) {
-	                                		available = "Not available!";
-	                                	}
-	                                	else {
-	                                		available = "available!";
-	                                	}
-	                                	//Printing details of the room
-	                                	String format = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
-	                                	System.out.printf(format,"Room availability", "Room Number","Room Type","Wifi","Smoking","View");
-	                                    System.out.printf(format, "================", "==================", "==================", "==================", "==================","==================");
-	                                    System.out.printf(format,available,rooms.rooms[i].getRoomNum(),rooms.rooms[i].getRoomType(),rooms.rooms[i].getWifi(),rooms.rooms[i].getSmoking(),rooms.rooms[i].getView());
-	                                	
-	                                    roomcheck = true;
-	                                    found_room = true;
-	                                } //for if specific room is found
-				                           
-		                       } // for for loop
-		                                roomnum_or_guest = 1;
-		                                break;
-                        
-	                        	case 2:
-	                        		sc.nextLine();
-	                                System.out.println("Enter guest name: ");
-	                                //Extract guest from reservation database
-	                                String guest_check = sc.nextLine();
-                                
-	                                ArrayList<Object> reserv = DataBase.getReservationDataBase();
-	                                for(int i = 0; i < reserv.size(); i++) {
-	                                    if (((Reservation) ((ArrayList<Object>) DataBase.getReservationDataBase().get(i)).get(1)).getGuest().getIc().getName().equals(guest_check)) {
-	                                    	Reservation target_reserv = ((Reservation) ((ArrayList<Object>) DataBase.getReservationDataBase().get(i)).get(1));
-	                                    	
-	                                    	RoomStatus room_status = target_reserv.getRoom().getStatus();
-	                                    	String available;
-	                                    	if(room_status.equals(RoomStatus.OCCUPIED) || room_status.equals(RoomStatus.RESERVED) || room_status.equals(RoomStatus.MAINTENANCE)) {
-	                                    		available = "Not available!";
-	                                    	}
-	                                    	else {
-	                                    		available = "available!";
-	                                    	}
-	                                    	String format = "%-20s%-20s%-20s%-20s%-20s%-20s%n";
-	                                    	System.out.printf(format,"Room availability", "Room Number","Room Type","Wifi","Smoking","View");
-	                                        System.out.printf(format, "================", "==================", "==================", "==================", "==================","==================");
-	                                        System.out.printf(format,available,target_reserv.getRoom().getRoomNum(),target_reserv.getRoom().getRoomType(),target_reserv.getRoom().getWifi(),target_reserv.getRoom().getSmoking(),target_reserv.getRoom().getView());
-	                                    	
-	                                    	roomcheck = true;
-	                                    	found_room = true;
-	                                    	continue;
-	                                    }
-	                                }
-	                                roomnum_or_guest = 2;
-	                                break;
-	                                
-	                        	case 3:
-	                        		roomcheck = false;
-	                        		continue;
-	                        		
-	                            default: roomcheck = true;
-	                        	}
-	                        	
-	                        	if (!(found_room)) {
-	                        		switch(roomnum_or_guest) {
-	                        		case 1:
-	                        			System.out.println("Room Number is not Valid!");
-	                        			break;
-	                        		case 2:
-	                        			System.out.println("Guest Name is not Valid!");
-	                        			break;
-	                        		}
-	                        		roomcheck = true;
-	                        	}
-	                        }
-	                        break;  
-                            case 2:
+                            case 1:
                             	boolean found = false;
                                 System.out.println("Input the Room Number");
                                 roomNumber = sc.nextLine();
@@ -807,15 +699,15 @@ public class App4 {
                                 if (!found) System.out.println("Invalid Room Number");
                                 break;
                                 
-                            case 3:
+                            case 2:
                                 rooms.printVacantRooms();
                                 break;
                                 
-                            case 4:
+                            case 3:
                                 rooms.printRoomsByStatusMain();
                                 break;
                                 
-                            case 5:                           	
+                            case 4:                           	
                                 exit = false;
                                 break;
                         }
