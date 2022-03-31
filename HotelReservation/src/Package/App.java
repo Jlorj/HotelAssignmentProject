@@ -1,4 +1,4 @@
-package Assignment;
+package Package;
 
 
 import java.io.BufferedReader;
@@ -20,7 +20,7 @@ public class App {
 
         // Initialize all 48 rooms
         Rooms rooms = new Rooms();
-        String file = "src/RoomsInformation.csv";
+        String file = "RoomsInformation.csv";
         BufferedReader reader = null;
         String line = "";
         try{
@@ -79,104 +79,6 @@ public class App {
         // Beginning of the program
         System.out.println("Welcome to ABC Hotel. Please choose one of the following options to proceed: ");
         while (on) {
-        	
-        	// Check for reservations that are due for checkout:
-        	Date tempCheckOutDate;
-        	Date tempCurDate = dt;
-        	int dateMargin;
-        	Boolean anyReservationCheckedOut = false;
-        	Reservation tempReservation;
-        	RoomService tempRS;
-        	
-        	
-        	// Set Confirmation Time at Current Time
-        	LocalDateTime curTime = tempCurDate.toInstant()
-            .atZone(ZoneId.systemDefault())
-            .toLocalDateTime();
-        	
-        	// Set Pending Time at 15 Minutes After Confirmation Time
-        	Calendar c1 = Calendar.getInstance();
-        	c1.setTime(tempCurDate);
-            c1.add(Calendar.MINUTE, 15);
-            tempCurDate = c1.getTime();
-            LocalDateTime pendingDateandTime = tempCurDate.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
-            
-            // Set Delivery Time at 60 Minutes After Confirmation Time
-        	c1 = Calendar.getInstance();
-        	c1.setTime(tempCurDate);
-            c1.add(Calendar.MINUTE, 45);
-            tempCurDate = c1.getTime();
-            LocalDateTime deliveredDateandTime = tempCurDate.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
-        	
-            
-            
-        	//Check for empty DataBase
-        	if (DataBase.getReservationDataBase().size() == 0) {
-                System.out.println("========================");
-        		System.out.println("Reservation Database is Empty");
-                System.out.println("========================");
-        	}
-        	
-        	else {
-        		for(int i = 0; i < DataBase.getReservationDataBase().size(); i++) {
-        			tempReservation = (Reservation)((ArrayList<Object>) DataBase.getReservationDataBase().get(i)).get(1);
-        			tempCheckOutDate = new SimpleDateFormat("yyyy-MM-dd").parse(tempReservation.getCheckOutDate());
-        			dateMargin = DateCheck.getZeroTimeDate(dt).compareTo(DateCheck.getZeroTimeDate(tempCheckOutDate));
-        			
-        			//If current day is the checkout date
-        			if(dateMargin ==  0|| dateMargin > 0) {
-        				System.out.println("========================");
-        				System.out.println("This reservation code has exceeded the check out time: " + tempReservation.getReservationCode());
-        				System.out.println("Guest Name is: " + tempReservation.getGuest().getIc().getName());
-        				System.out.println("========================");
-        				DataBase.checkOut(tempReservation.getReservationCode());
-        				anyReservationCheckedOut = true;
-        			}
-        			
-        			if (rsDB.rsDB.size() != 0) {
-                		for(int j = 0; j < rsDB.rsDB.size(); j++) {
-                			System.out.println("Reservation code " + tempReservation.getReservationCode());
-                			
-                			// Update Room Service Status
-                        	LocalDateTime tempLocalDateTime = dt.toInstant()
-                        	        .atZone(ZoneId.systemDefault())
-                        	        .toLocalDateTime();
-                        	
-                        	tempRS = rsDB.getRoomService(tempReservation.getReservationCode());
-                        	System.out.println("This is the Room Service" + tempRS);
-                        	
-        					if(curTime.isAfter(tempRS.getOrderDateandTime()) ) {
-                        		tempRS.setRoomServiceStatus(tempRS.roomServiceStatus.CONFIRMED);
-                        	}
-
-        					if(curTime.isAfter(tempRS.getPendingDateandTime()) ) {
-                        		tempRS.setRoomServiceStatus(tempRS.roomServiceStatus.PREPARING);
-        					}
-        					
-        					if(curTime.isAfter(tempRS.getDeliveredDateandTime()) ) {
-                        		tempRS.setRoomServiceStatus(tempRS.roomServiceStatus.DELIVERED);
-                        	}
-
-                		}
-                    }
-
-        		}
-        		
-        		if(anyReservationCheckedOut == true) {
-        			System.out.println("========================");
-        			System.out.println("Reservations Have Been Removed");
-        			System.out.println("========================");
-        		} 
-        		else{
-        			System.out.println("========================");
-        			System.out.println("No Reservations Have Been Removed");
-        			System.out.println("========================");
-        		}
-        	}   	
         	
         	
         	
@@ -878,55 +780,65 @@ public class App {
             		c.setTime(dt);
                     c.add(Calendar.MINUTE, 5);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 2: 
             		c.setTime(dt);
                     c.add(Calendar.MINUTE, 15);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 3: 
             		c.setTime(dt);
                     c.add(Calendar.MINUTE, 30);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 4: 
             		c.setTime(dt);
                     c.add(Calendar.HOUR, 1);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 5: 
             		c.setTime(dt);
                     c.add(Calendar.HOUR, 2);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 6: 
             		c.setTime(dt);
                     c.add(Calendar.HOUR, 6);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 7: 
             		c.setTime(dt);
                     c.add(Calendar.DATE, 1);
                     c.set(Calendar.HOUR_OF_DAY, 0);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 8: 
             		c.setTime(dt);
                     c.add(Calendar.DATE, 2);
                     c.set(Calendar.HOUR_OF_DAY, 0);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 9: 
             		c.setTime(dt);
                     c.add(Calendar.DATE, 3);
                     c.set(Calendar.HOUR_OF_DAY, 0);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;
             	case 10: 
             		c.setTime(dt);
                     c.add(Calendar.DATE, 7);
                     c.set(Calendar.HOUR_OF_DAY, 0);
                     dt = c.getTime();
+                    DateCheck.performChecks(dt, DataBase, rsDB);
                 	break;            
                 	
             	}
