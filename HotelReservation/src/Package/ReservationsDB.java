@@ -50,6 +50,12 @@ public class ReservationsDB {
         ReservationDataBase.remove(getReservationIndexFromReservationCode(reservationCode));
         System.out.println("Successfully Checked Out! Reservation has been deleted");
     }
+    
+    public void removeReservation(String reservationCode) {
+    	getReservationFromReservationCode(reservationCode).getRoom().setStatus(Room.RoomStatus.VACANT);
+        ReservationDataBase.remove(getReservationIndexFromReservationCode(reservationCode));
+        System.out.println("Successfully Removed Reservation! Reservation has been deleted");
+    }
 
 
     public void displayAllReservations(){
