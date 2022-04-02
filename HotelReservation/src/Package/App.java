@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import Assignment.Reservation.ReservationStatus;
 import Assignment.Room.RoomStatus;
 
 import java.io.*;
@@ -264,12 +265,13 @@ public class App4 {
                     while(on2) {
                     	System.out.println("Please select an option for Reservations");
                         System.out.println("----------------------------------------------");
-                        System.out.println("(1) Check-In (Walk-in or Reservation)");
-                        System.out.println("(2) Check-Out (Delete Reservation)"); // printing out the bill invoice as well
-                        System.out.println("(3) Update an Existing Reservation");
-                        System.out.println("(4) Display a Reservation by Reservation Code");
-                        System.out.println("(5) Display Reservations Database");
-                        System.out.println("(6) Exit");
+                        System.out.println("(1) Walk-in or Reservation ");            // Come to counter - to either book in advance or immediately get a room
+                        System.out.println("(2) Check-in");                           // For those who already have made a reservation
+                        System.out.println("(3) Check-Out (Delete Reservation)"); // printing out the bill invoice as well
+                        System.out.println("(4) Update an Existing Reservation");
+                        System.out.println("(5) Display a Reservation by Reservation Code");
+                        System.out.println("(6) Display Reservations Database");
+                        System.out.println("(7) Exit");
                         System.out.println("-----------------------------------------------");
                         int option = sc.nextInt();
                         sc.nextLine();
@@ -349,7 +351,8 @@ public class App4 {
 	                                    myReservation.generateCode();
 	                                    DataBase.appendRow(myReservation.getReservationCode(), myReservation);
 	                                    System.out.println("Reservation Is Successful");
-	                                    
+	                                    myReservation.setStatus(ReservationStatus.CONFIRMED);
+	                                
 	                  // =================================== Adding in the printing of the reservation details if reservation is successful =============================//
 	                                    
 	                                    //Just to print the header nicely
@@ -403,8 +406,27 @@ public class App4 {
 	                                }
 	                            }
 	                            break;
-	
-	                        case 2: // printing guest's hotel bill invoice
+	                            
+	                            
+	                        case 2: //Allowing check in for gues twho already made a reservation!
+	                        	
+	                        	//Get reservation code for checking in!
+	                        	System.out.println("Please enter reservation code: ");
+	                            reservationCode = sc.nextLine();
+	                            if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
+	                                System.out.println("No reservation under this code has been made!");
+	                            }
+	                            //Update the room status as the guest checks in!
+	                            else {
+	                            		
+	                                	Reservation reserv_check_in = DataBase.getReservationFromReservationCode(reservationCode);
+	                                	reserv_check_in.getRoom().setStatus( RoomStatus.OCCUPIED );
+	                                	reserv_check_in.setStatus(ReservationStatus.CHECKED_IN);
+	                                	System.out.println("Successfully checked-in!");
+	                                }
+	                        	break;
+	                        	
+	                        case 3: // printing guest's hotel bill invoice
 	                            System.out.println("Please enter reservation code: ");
 	                            reservationCode = sc.nextLine();
 	                            if(DataBase.getReservationFromReservationCode(reservationCode) == null) {
@@ -449,7 +471,7 @@ public class App4 {
 	                            }
 	                            break;
 	                            
-	                        case 3:
+	                        case 4:
 	                            System.out.println("Please enter reservation code: ");
 	                            reservationCode = sc.nextLine();
 	                            
@@ -513,15 +535,15 @@ public class App4 {
 	                                }
 	                            }
 	                            break;
-	                        case 4:
+	                        case 5:
 	                        	System.out.println("Please enter reservation code: ");
 	                            reservationCode = sc.nextLine();
 	                            DataBase.printReservationFromReservationCode(reservationCode);                           
 	                            break;
-	                        case 5:
+	                        case 6:
 	                        	DataBase.displayAllReservations();                            
 	                            break;
-	                        case 6:
+	                        case 7:
 	                        	on2 = false;
 	                            break;
 	                    	}                        
