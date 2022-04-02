@@ -1,4 +1,4 @@
-package Package;
+package Assignment;
 
 import java.text.DecimalFormat;
 import java.time.DayOfWeek;
@@ -7,6 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Reservation implements Payment{
+	
+	public enum ReservationStatus{
+		WAITLIST,CONFIRMED,CHECKED_IN,EXPIRED;
+	}
+	
+	protected ReservationStatus status = ReservationStatus.WAITLIST;
     private Room room;
     private Guest guest;
     private String checkInDate;
@@ -22,12 +28,12 @@ public class Reservation implements Payment{
         Scanner sc = new Scanner(System.in);
         System.out.println("Input check in date (YYYY-MM-DD)");
         String date_checkin = sc.nextLine();
-        this.checkInDate = date_checkin; //Check_date.get_input(date_checkin);
+        this.checkInDate = Check_date.get_input(date_checkin);
         
         
         System.out.println("Input check out date (YYYY-MM-DD)");
         String date_checkout = sc.nextLine();
-        this.checkOutDate = date_checkout; //Check_date.get_input(date_checkout);
+        this.checkOutDate = Check_date.get_input(date_checkout);
         
       //Exception Handling for all number of children and adult inputed
         System.out.println("Input number of adults");
@@ -70,6 +76,11 @@ public class Reservation implements Payment{
     public String getCode(){
         return code;
     }
+    
+    
+    public ReservationStatus getStatus() {
+    	return status;
+    }
 
     public void generateCode(){
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
@@ -82,6 +93,10 @@ public class Reservation implements Payment{
             sb.append(AlphaNumericString.charAt(index));
         }
         this.code = sb.toString();
+    }
+    
+    public void setStatus(ReservationStatus rvs) {
+    	this.status = rvs;
     }
 
     public void setRoom(Room room) {
