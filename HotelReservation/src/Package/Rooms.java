@@ -1,10 +1,13 @@
 package Assignment;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class Rooms {
+public class Rooms implements Serializable {
     protected Room[] rooms;
+    
     int numRooms = 48;
+
     Rooms(){
         rooms = new Room[48];
     }
