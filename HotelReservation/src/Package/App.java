@@ -1,9 +1,6 @@
 package Assignment;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,34 +16,29 @@ import Assignment.Room.RoomStatus;
 import java.io.*;
 import java.time.*;
 
-public class App4 {
-    public static void main(String[] args) throws ParseException {
+public class App {
+    public static void main(String[] args) throws ParseException, IOException {
 
-        // Initialize all 48 rooms
-        Rooms rooms = new Rooms();
-        String file = "src/RoomsInformation.csv";
-        BufferedReader reader = null;
-        String line = "";
-        try{
-            reader = new BufferedReader(new FileReader(file));
-            // room number is from 1-48 but array is zero indexed
-            line = reader.readLine();
-            while((line = reader.readLine()) != null){
-                String[] row = line.split(",");
-                rooms.addRoom(Integer.parseInt(row[0]), row[1], row[2], Boolean.parseBoolean(row[3]), Boolean.parseBoolean(row[4]), Boolean.parseBoolean(row[5]));
-            }
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
-        finally{
-            try{
-                reader.close();
-            }catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-        //end
+    	//Reading rooms.ser file to initialize 48 empty rooms
+    	Rooms rooms = null;
+	      try {
+	         FileInputStream fileIn = new FileInputStream("employee.ser");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         rooms = (Rooms) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      } catch (IOException i) { 
+	         i.printStackTrace();
+	         return;
+	      } catch (ClassNotFoundException c) {
+	         System.out.println("Employee class not found");
+	         c.printStackTrace();
+	         return;
+	      }
+	      System.out.println(rooms);
+	   
+
+       
 
         // Initializing the menu
         Menu menu = new Menu();

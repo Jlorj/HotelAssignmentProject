@@ -1,6 +1,8 @@
 package Assignment;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable{
 
     public enum BedType{
         SINGLE,DOUBLE,MASTER;
