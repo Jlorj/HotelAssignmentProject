@@ -22,7 +22,7 @@ public class App {
     	//Reading rooms.ser file to initialize 48 empty rooms
     	Rooms rooms = null;
 	      try {
-	         FileInputStream fileIn = new FileInputStream("employee.ser");
+	         FileInputStream fileIn = new FileInputStream("rooms.ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         rooms = (Rooms) in.readObject();
 	         in.close();
@@ -38,7 +38,7 @@ public class App {
 	      System.out.println(rooms);
 	   
 
-       
+        
 
         // Initializing the menu
         Menu menu = new Menu();
