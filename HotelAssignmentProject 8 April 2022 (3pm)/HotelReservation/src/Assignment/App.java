@@ -116,8 +116,10 @@ public class App {
             System.out.println("(6) Time Elapse");
             System.out.println("------------------------");
 
-            int choice = sc.nextInt();
-            sc.nextLine();
+            
+            String str_choice = sc.nextLine();
+            int choice = Check_if_int.get_input(str_choice, "(1) to (6)");
+            
             
             switch (choice) {
           //--------------------------------------(1) Guest----------------------------------------------------//
@@ -128,8 +130,8 @@ public class App {
                     System.out.println("(3) Display all Guest details");
                     System.out.println("(4) Exit");
                     System.out.println("------------------------");
-                    int choice2 = sc.nextInt();
-                    sc.nextLine();
+                    String str_choice_guest = sc.nextLine();
+                    int choice2 = Check_if_int.get_input(str_choice_guest, "(1) to (4)");
                     //Inner switch
                     switch(choice2) {
 
@@ -280,8 +282,9 @@ public class App {
                         System.out.println("(6) Display Reservations Database");
                         System.out.println("(7) Exit");
                         System.out.println("-----------------------------------------------");
-                        int option = sc.nextInt();
-                        sc.nextLine();
+                        
+                        String str_reserv = sc.nextLine();
+                        int option = Check_if_int.get_input(str_reserv, "(1) to (7)");
                     	switch(option) {
 	                        case 1:
 	                        	System.out.println("Walk-in or Reservation?");
@@ -570,8 +573,8 @@ public class App {
                         System.out.println("(4) Print ALL Rooms BY Status");
                         System.out.println("(5) Exit");
                         System.out.println("---------------------------------------");
-                        userInput = sc.nextInt();
-                        sc.nextLine();
+                        String str_room = sc.nextLine();
+                        userInput = Check_if_int.get_input(str_room, "(1) to (5)");
                         switch(userInput){
                         
                         
@@ -764,8 +767,8 @@ public class App {
 	                    System.out.println("(6) Check Room Service Status");
 	                    System.out.println("(7) Exit");
 	                    System.out.println("---------------------------------");
-	                    choice2 = sc.nextInt();                   
-	                    sc.nextLine();
+	                    String str_room_serv = sc.nextLine();
+	                    choice2 = Check_if_int.get_input(str_room_serv, "(1) to (7)");   
 	                    
 	                	switch(choice2){
 	
